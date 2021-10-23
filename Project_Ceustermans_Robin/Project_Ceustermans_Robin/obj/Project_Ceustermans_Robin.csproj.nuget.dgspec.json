@@ -1,17 +1,17 @@
 {
   "format": 1,
   "restore": {
-    "C:\\School2\\WebApps\\Project\\Project_Ceustermans_Robin\\Project_Ceustermans_Robin\\Project_Ceustermans_Robin.csproj": {}
+    "C:\\School2\\WebApps\\Project\\ASPNET-Core-MVC-r0666177\\Project_Ceustermans_Robin\\Project_Ceustermans_Robin\\Project_Ceustermans_Robin.csproj": {}
   },
   "projects": {
-    "C:\\School2\\WebApps\\Project\\Project_Ceustermans_Robin\\Project_Ceustermans_Robin\\Project_Ceustermans_Robin.csproj": {
+    "C:\\School2\\WebApps\\Project\\ASPNET-Core-MVC-r0666177\\Project_Ceustermans_Robin\\Project_Ceustermans_Robin\\Project_Ceustermans_Robin.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "C:\\School2\\WebApps\\Project\\Project_Ceustermans_Robin\\Project_Ceustermans_Robin\\Project_Ceustermans_Robin.csproj",
+        "projectUniqueName": "C:\\School2\\WebApps\\Project\\ASPNET-Core-MVC-r0666177\\Project_Ceustermans_Robin\\Project_Ceustermans_Robin\\Project_Ceustermans_Robin.csproj",
         "projectName": "Project_Ceustermans_Robin",
-        "projectPath": "C:\\School2\\WebApps\\Project\\Project_Ceustermans_Robin\\Project_Ceustermans_Robin\\Project_Ceustermans_Robin.csproj",
+        "projectPath": "C:\\School2\\WebApps\\Project\\ASPNET-Core-MVC-r0666177\\Project_Ceustermans_Robin\\Project_Ceustermans_Robin\\Project_Ceustermans_Robin.csproj",
         "packagesPath": "C:\\Users\\roobi\\.nuget\\packages\\",
-        "outputPath": "C:\\School2\\WebApps\\Project\\Project_Ceustermans_Robin\\Project_Ceustermans_Robin\\obj\\",
+        "outputPath": "C:\\School2\\WebApps\\Project\\ASPNET-Core-MVC-r0666177\\Project_Ceustermans_Robin\\Project_Ceustermans_Robin\\obj\\",
         "projectStyle": "PackageReference",
         "configFilePaths": [
           "C:\\Users\\roobi\\AppData\\Roaming\\NuGet\\NuGet.Config",
@@ -59,6 +59,10 @@
             "Microsoft.EntityFrameworkCore.Tools": {
               "target": "Package",
               "version": "[3.1.19, )"
+            },
+            "Microsoft.VisualStudio.Web.CodeGeneration.Design": {
+              "target": "Package",
+              "version": "[3.1.5, )"
             }
           },
           "imports": [
