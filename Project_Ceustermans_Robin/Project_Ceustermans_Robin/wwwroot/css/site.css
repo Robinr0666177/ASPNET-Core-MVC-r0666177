@@ -8,19 +8,33 @@ a.navbar-brand {
 }
 
 /* Provide sufficient contrast against white background */
+
 a {
-    color: #ffffff;
+    color: #fff;
 }
 
-    a:hover {
-        color:white;
-    }
+a:hover {
+        color: white;
+}
+
+.privacy {
+    color: #014F88;
+}
+
+
 
 .btn {
     color: #fff;
     background-color: #014F88;
     border-color: #014F88;
 }
+
+
+    .btn:hover {
+        color: #ffffff;
+        background-color: #0264AC;
+        border-color: #0264AC;
+    }
 
 .navbar { 
     color: white;

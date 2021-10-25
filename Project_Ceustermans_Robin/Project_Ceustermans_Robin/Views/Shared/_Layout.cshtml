@@ -7,6 +7,7 @@
     <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" />
     <link rel="stylesheet" href="~/css/site.css" />
 </head>
+
 <body>
     <header>
         <nav class="navbar navbar-expand-sm navbar-toggleable-sm border-bottom box-shadow mb-3">
@@ -20,7 +21,7 @@
                     <partial name="_LoginPartial" />
                     <ul class="navbar-nav flex-grow-1">
                         <li class="nav-item">
-                            <a class="nav-link" asp-area="" asp-controller="Home" asp-action="Index">Overzicht items</a>
+                            <a class="nav-link" asp-area="" asp-controller="Items" asp-action="Items">Overzicht items</a>
                         </li>
                     </ul>
                 </div>
@@ -35,7 +36,7 @@
 
     <footer class="border-top footer text-muted">
         <div class="container">
-            &copy; 2021 - Project_Ceustermans_Robin - <a asp-area="" asp-controller="Home" asp-action="Privacy">Privacy</a>
+            &copy; 2021 - Project_Ceustermans_Robin - <a class="privacy" asp-area="" asp-controller="Privacy" asp-action="Privacy">Privacy</a>
         </div>
     </footer>
     <script src="~/lib/jquery/dist/jquery.min.js"></script>
@@ -44,3 +45,4 @@
     @RenderSection("Scripts", required: false)
 </body>
 </html>
+

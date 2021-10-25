@@ -5,16 +5,20 @@
 
 <div class="container">
     <div class="row">
-        <div class="col">
-            <img src="~/images/antique.jpg" />
+        <div class="col-md-8" align="center" >
+            <img src="~/images/antique.jpg" class="img-fluid"  />
         </div>
-        <div class="col">
+        <div class="col-md-4">
             <div class="text-center">
                 <h1 class="display-4">Welkom</h1>
                 <p>Door op de knop te drukken kan u mijn mooie verzameling bekijken.</p>
-                <button class="btn">Bekijk mijn verzameling</button>
+                <form asp-area="" asp-controller="Items" asp-action="Items">
+                    <button class="btn" onclick="this.blur();">Bekijk mijn verzameling</button>
+                </form>
+                
             </div>
         </div>
     </div>
 </div>
+
 
