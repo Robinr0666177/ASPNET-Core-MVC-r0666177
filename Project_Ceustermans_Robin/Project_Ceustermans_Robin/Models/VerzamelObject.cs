@@ -27,5 +27,12 @@ namespace Project_Ceustermans_Robin.Models
         public int? Lengte_Cm { get; set; }
         public string Afbeelding { get; set; }
 
+        //navigateproperties
+        public ICollection<MedeEigenaarObject> medeEigenaarObjecten { get; set; }
+
+        public Merk Merk { get; set; }
+
+        public Categorie Categorie { get; set; }
+
     }
 }

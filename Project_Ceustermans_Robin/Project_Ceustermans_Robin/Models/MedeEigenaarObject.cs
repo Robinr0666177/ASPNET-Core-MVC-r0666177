@@ -14,5 +14,11 @@ namespace Project_Ceustermans_Robin.Models
         [Required]
         public int ObjectID { get; set; }
 
+        //navigatieproperties
+
+        public MedeEigenaar MedeEigenaar { get; set; }
+
+        public VerzamelObject VerzamelObject { get; set; }
+
     }
 }

@@ -17,5 +17,8 @@ namespace Project_Ceustermans_Robin.Models
         [Required]
         public string Familienaam { get; set; }
 
+        //navigateproperties
+        public ICollection<MedeEigenaarObject> medeEigenaarObjecten { get; set; }
+
     }
 }

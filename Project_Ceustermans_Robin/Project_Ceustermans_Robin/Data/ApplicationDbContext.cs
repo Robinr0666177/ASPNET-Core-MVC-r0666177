@@ -28,9 +28,35 @@ namespace Project_Ceustermans_Robin.Data
         {
             base.OnModelCreating(modelBuilder);
 
+            //Land
             modelBuilder.Entity<Land>().ToTable("Land");
-            modelBuilder.Entity<Land>().Property(p => p.Beschrijving).IsRequired();
 
+            //Categorie
+            modelBuilder.Entity<Categorie>().ToTable("Categorie");
+
+            //Merk
+            modelBuilder.Entity<Merk>().ToTable("Merk");
+
+            //VerzamelObject
+            modelBuilder.Entity<VerzamelObject>().ToTable("VerzamelObject");
+
+            //MedeEigenaar
+            modelBuilder.Entity<MedeEigenaar>().ToTable("Mede_Eigenaar");
+
+            //MedeEigenaarObject
+            modelBuilder.Entity<MedeEigenaarObject>()
+                .HasKey(p => new { p.MedeEigenaarID, p.ObjectID });
+
+            modelBuilder.Entity<MedeEigenaarObject>()
+                .HasOne(m => m.MedeEigenaar)
+                .WithMany(mo => mo.medeEigenaarObjecten)
+                .HasForeignKey(m => m.MedeEigenaarID);
+
+            modelBuilder.Entity<MedeEigenaarObject>()
+                .HasOne(v => v.VerzamelObject)
+                .WithMany(mo => mo.medeEigenaarObjecten)
+                .HasForeignKey(v => v.ObjectID);
+              
 
         }
 

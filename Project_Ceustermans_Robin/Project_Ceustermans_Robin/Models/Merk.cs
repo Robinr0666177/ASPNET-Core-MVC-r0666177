@@ -19,5 +19,10 @@ namespace Project_Ceustermans_Robin.Models
 
         public string Beschrijving { get; set; }
 
+        //navigatieproperties
+
+        public Land Land { get; set; }
+
+        public ICollection<VerzamelObject> VerzamelObjecten { get; set; }
     }
 }

@@ -13,5 +13,9 @@ namespace Project_Ceustermans_Robin.Models
 
         [Required]
         public string Beschrijving { get; set; }
+
+        //navigatieproperties
+
+        public ICollection<VerzamelObject> VerzamelObjecten { get; set; }
     }
 }
