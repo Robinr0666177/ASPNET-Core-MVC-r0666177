@@ -31,12 +31,13 @@ namespace Project_Ceustermans_Robin
             services.AddDbContext<ApplicationDbContext>(options =>
                   options.UseSqlServer(Configuration.GetConnectionString("LocalDBConnection")));
             services.AddDefaultIdentity<IdentityUser>(options => options.SignIn.RequireConfirmedAccount = true)
+                .AddRoles<IdentityRole>()
                 .AddEntityFrameworkStores<ApplicationDbContext>();         
             services.AddRazorPages();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
-        public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
+        public void Configure(IApplicationBuilder app, IWebHostEnvironment env, IServiceProvider serviceProvider)
         {
             if (env.IsDevelopment())
             {
@@ -64,6 +65,43 @@ namespace Project_Ceustermans_Robin
                     pattern: "{controller=Home}/{action=Index}/{id?}");
                 endpoints.MapRazorPages();
             });
+
+           // CreateRoles(serviceProvider).Wait();
         }
+
+
+        private async Task CreateRoles(IServiceProvider serviceProvider)
+        {
+            var roleManager = serviceProvider.GetRequiredService<RoleManager<IdentityRole>>();
+            var userManager = serviceProvider.GetRequiredService<UserManager<IdentityUser>>();
+
+            ApplicationDbContext context = serviceProvider.GetRequiredService<ApplicationDbContext>();
+
+            string roleName = "admin";
+            IdentityResult roleResult;
+
+            var roleExists = await roleManager.RoleExistsAsync(roleName);
+            if (!roleExists)
+            {
+                roleResult = await roleManager.CreateAsync(new IdentityRole(roleName));
+            }
+
+            IdentityUser user = context.Users.FirstOrDefault(u => u.Email == "gerry.ceustermans41@telenet.be");
+
+            if (user != null)
+            {
+                DbSet<IdentityUserRole<string>> roles = context.UserRoles;
+                IdentityRole adminRole = context.Roles.FirstOrDefault(r => r.Name == "Admin");
+                if (adminRole != null)
+                {
+                    if (!roles.Any(ur => ur.UserId == user.Id && ur.RoleId == adminRole.Id))
+                    {
+                        roles.Add(new IdentityUserRole<string>() { UserId = user.Id, RoleId = adminRole.Id });
+                        context.SaveChanges();
+                    }
+                }
+            }
+        }
+
     }
 }

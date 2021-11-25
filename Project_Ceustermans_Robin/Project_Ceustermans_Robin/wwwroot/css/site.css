@@ -75,11 +75,20 @@ button.accept-policy {
   line-height: inherit;
 }
 
+
+.testbtn{
+    background-color:green;
+}
+
+    .testbtn:focus {
+        outline: 0 !important;
+    }
+
 /* Sticky footer styles
 -------------------------------------------------- */
 html {
-  position: relative;
-  min-height: 100%;
+    position: relative;
+    min-height: 100%;
 }
 
 body {

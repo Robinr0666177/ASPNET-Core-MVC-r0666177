@@ -1,4 +1,13 @@
-﻿// Please see documentation at https://docs.microsoft.com/aspnet/core/client-side/bundling-and-minification
-// for details on configuring this project to bundle and minify static web assets.
+﻿////function blurInput() {
+////    document.getElementById('testbtn').blur();
+////}
 
-// Write your JavaScript code.
+
+//deze werkt niet
+
+$(".btn").click(function btnclick() {
+    $(".mybtn").attr("button:active", true);
+    $(".mybtn").delay(1000).attr("button:active", false);
+});
+
+

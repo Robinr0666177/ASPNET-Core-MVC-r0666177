@@ -6,6 +6,8 @@
     <title>@ViewData["Title"] - Project_Ceustermans_Robin</title>
     <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" />
     <link rel="stylesheet" href="~/css/site.css" />
+    <!-- Icons fontawesome-->
+    <script src="https://kit.fontawesome.com/cb0219efc4.js" crossorigin="anonymous"></script>
 </head>
 
 <body>
@@ -26,6 +28,17 @@
                         <li class="nav-item">
                             <a class="nav-link" asp-area="" asp-controller="Info" asp-action="Info">Info</a>
                         </li>
+                        @if (this.User.Identity.IsAuthenticated)
+                        {
+                            <li class="nav-item">
+                                <a class="nav-link" asp-area="" asp-controller="MedeEigenaar" asp-action="MedeEigenaar">Mede Eigenaren</a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link" asp-area="" asp-controller="Merk" asp-action="Merk">Merken</a>
+                            </li>
+                        }
+
+
                     </ul>
                 </div>
             </div>
