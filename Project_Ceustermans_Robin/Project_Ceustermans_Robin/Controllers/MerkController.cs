@@ -12,5 +12,11 @@ namespace Project_Ceustermans_Robin.Controllers
         {
             return View();
         }
+
+
+        public IActionResult CreateMerk()
+        {
+            return View();
+        }
     }
 }

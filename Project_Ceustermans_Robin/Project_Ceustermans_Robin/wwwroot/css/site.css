@@ -13,15 +13,18 @@ a {
     color: #fff;
 }
 
-a:hover {
-        color: white;
-}
-
-.privacy {
+.a2 {
     color: #014F88;
+    text-decoration: none;
+}
+.a2:hover {
+     color: #17A2B8;
+     text-decoration: none;
 }
 
-
+a:hover {
+     color: white;
+}
 
 .btn {
     color: #fff;
@@ -30,13 +33,32 @@ a:hover {
 }
 
 
-    .btn:hover {
-        color: #ffffff;
-        background-color: #0264AC;
-        border-color: #0264AC;
-    }
+.btn:hover {
+     color: #ffffff;
+     background-color: #0264AC;
+     border-color: #0264AC;
+}
 
-.navbar { 
+.btn:active,
+.btn:focus,
+.btn:focus:active {
+    background-image: none;
+    outline: 0;
+    box-shadow: none;
+}
+
+.privacy {
+    color: #014F88;
+}
+
+
+.row-merken{
+    margin-top: 4em;
+}
+
+
+
+.navbar {
     color: white;
     background-color: #014F88;
     border-color: #014F88;
@@ -76,13 +98,6 @@ button.accept-policy {
 }
 
 
-.testbtn{
-    background-color:green;
-}
-
-    .testbtn:focus {
-        outline: 0 !important;
-    }
 
 /* Sticky footer styles
 -------------------------------------------------- */
