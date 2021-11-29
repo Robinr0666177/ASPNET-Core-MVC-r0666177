@@ -33,12 +33,12 @@ namespace Project_Ceustermans_Robin.Areas.Identity.Pages.Account
         public class InputModel
         {
             [Required]
-            [StringLength(7, ErrorMessage = "The {0} must be at least {2} and at max {1} characters long.", MinimumLength = 6)]
+            [StringLength(7, ErrorMessage = "Het {0} moet tenminste {2} en maximaal {1} karakters lang zijn.", MinimumLength = 6)]
             [DataType(DataType.Text)]
             [Display(Name = "Authenticator code")]
             public string TwoFactorCode { get; set; }
 
-            [Display(Name = "Remember this machine")]
+            [Display(Name = "Onhoud deze machine")]
             public bool RememberMachine { get; set; }
         }
 
@@ -49,7 +49,7 @@ namespace Project_Ceustermans_Robin.Areas.Identity.Pages.Account
 
             if (user == null)
             {
-                throw new InvalidOperationException($"Unable to load two-factor authentication user.");
+                throw new InvalidOperationException($"Niet mogelijk om two-factor authentication gebruiker te laden.");
             }
 
             ReturnUrl = returnUrl;
@@ -70,7 +70,7 @@ namespace Project_Ceustermans_Robin.Areas.Identity.Pages.Account
             var user = await _signInManager.GetTwoFactorAuthenticationUserAsync();
             if (user == null)
             {
-                throw new InvalidOperationException($"Unable to load two-factor authentication user.");
+                throw new InvalidOperationException($"Niet mogelijk om two-factor authenticatie gebruiker te laden.");
             }
 
             var authenticatorCode = Input.TwoFactorCode.Replace(" ", string.Empty).Replace("-", string.Empty);
@@ -79,18 +79,18 @@ namespace Project_Ceustermans_Robin.Areas.Identity.Pages.Account
 
             if (result.Succeeded)
             {
-                _logger.LogInformation("User with ID '{UserId}' logged in with 2fa.", user.Id);
+                _logger.LogInformation("Gebruiker with ID '{UserId}' ingelogd met two-factor authenticatie.", user.Id);
                 return LocalRedirect(returnUrl);
             }
             else if (result.IsLockedOut)
             {
-                _logger.LogWarning("User with ID '{UserId}' account locked out.", user.Id);
+                _logger.LogWarning("Gebruiker met ID '{UserId}' account locked out.", user.Id);
                 return RedirectToPage("./Lockout");
             }
             else
             {
-                _logger.LogWarning("Invalid authenticator code entered for user with ID '{UserId}'.", user.Id);
-                ModelState.AddModelError(string.Empty, "Invalid authenticator code.");
+                _logger.LogWarning("Ongeldige two-factor authenticatie code ingevoerd voor gebruiker met ID '{UserId}'.", user.Id);
+                ModelState.AddModelError(string.Empty, "Ongeldige two-factor authenticatie code.");
                 return Page();
             }
         }

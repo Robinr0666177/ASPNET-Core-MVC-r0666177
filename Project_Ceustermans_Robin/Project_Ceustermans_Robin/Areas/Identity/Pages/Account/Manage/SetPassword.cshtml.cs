@@ -31,14 +31,14 @@ namespace Project_Ceustermans_Robin.Areas.Identity.Pages.Account.Manage
         public class InputModel
         {
             [Required]
-            [StringLength(100, ErrorMessage = "The {0} must be at least {2} and at max {1} characters long.", MinimumLength = 6)]
+            [StringLength(100, ErrorMessage = "Het {0} moet tenminste {2} en maximaal {1} karakters lang zijn.", MinimumLength = 6)]
             [DataType(DataType.Password)]
-            [Display(Name = "New password")]
+            [Display(Name = "Nieuw wawhtwoord")]
             public string NewPassword { get; set; }
 
             [DataType(DataType.Password)]
-            [Display(Name = "Confirm new password")]
-            [Compare("NewPassword", ErrorMessage = "The new password and confirmation password do not match.")]
+            [Display(Name = "Bevestig nieuw wachtwoord")]
+            [Compare("NewPassword", ErrorMessage = "Het nieuwe wachtwoord en confirmatiewachtwoord komen niet overeen.")]
             public string ConfirmPassword { get; set; }
         }
 
@@ -47,7 +47,7 @@ namespace Project_Ceustermans_Robin.Areas.Identity.Pages.Account.Manage
             var user = await _userManager.GetUserAsync(User);
             if (user == null)
             {
-                return NotFound($"Unable to load user with ID '{_userManager.GetUserId(User)}'.");
+                return NotFound($"Niet mogelijk om gebruiker in te laden met ID '{_userManager.GetUserId(User)}'.");
             }
 
             var hasPassword = await _userManager.HasPasswordAsync(user);
@@ -70,7 +70,7 @@ namespace Project_Ceustermans_Robin.Areas.Identity.Pages.Account.Manage
             var user = await _userManager.GetUserAsync(User);
             if (user == null)
             {
-                return NotFound($"Unable to load user with ID '{_userManager.GetUserId(User)}'.");
+                return NotFound($"Niet mogelijk om gebruiker in te laden met ID '{_userManager.GetUserId(User)}'.");
             }
 
             var addPasswordResult = await _userManager.AddPasswordAsync(user, Input.NewPassword);
@@ -84,7 +84,7 @@ namespace Project_Ceustermans_Robin.Areas.Identity.Pages.Account.Manage
             }
 
             await _signInManager.RefreshSignInAsync(user);
-            StatusMessage = "Your password has been set.";
+            StatusMessage = "Uw wachtwoord is ingesteld.";
 
             return RedirectToPage();
         }

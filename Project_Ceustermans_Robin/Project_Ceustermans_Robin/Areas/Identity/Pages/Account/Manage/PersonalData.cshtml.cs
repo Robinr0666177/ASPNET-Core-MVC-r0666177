@@ -24,7 +24,7 @@ namespace Project_Ceustermans_Robin.Areas.Identity.Pages.Account.Manage
             var user = await _userManager.GetUserAsync(User);
             if (user == null)
             {
-                return NotFound($"Unable to load user with ID '{_userManager.GetUserId(User)}'.");
+                return NotFound($"Niet mogelijk om gebruiker in te laden met ID '{_userManager.GetUserId(User)}'.");
             }
 
             return Page();

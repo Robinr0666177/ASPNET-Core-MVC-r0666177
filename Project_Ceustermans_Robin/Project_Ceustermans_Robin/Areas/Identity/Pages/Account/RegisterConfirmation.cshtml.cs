@@ -37,7 +37,7 @@ namespace Project_Ceustermans_Robin.Areas.Identity.Pages.Account
             var user = await _userManager.FindByEmailAsync(email);
             if (user == null)
             {
-                return NotFound($"Unable to load user with email '{email}'.");
+                return NotFound($"NIet mogelijk om gebruiker in te laden met email '{email}'.");
             }
 
             Email = email;

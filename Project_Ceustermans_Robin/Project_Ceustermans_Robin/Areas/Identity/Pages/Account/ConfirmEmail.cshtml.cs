@@ -34,12 +34,12 @@ namespace Project_Ceustermans_Robin.Areas.Identity.Pages.Account
             var user = await _userManager.FindByIdAsync(userId);
             if (user == null)
             {
-                return NotFound($"Unable to load user with ID '{userId}'.");
+                return NotFound($"Niet mogelijk om gebruiker te laden met ID'{userId}'.");
             }
 
             code = Encoding.UTF8.GetString(WebEncoders.Base64UrlDecode(code));
             var result = await _userManager.ConfirmEmailAsync(user, code);
-            StatusMessage = result.Succeeded ? "Thank you for confirming your email." : "Error confirming your email.";
+            StatusMessage = result.Succeeded ? "Bedankt om uw email te bevestigen." : "Er is iets misgelopen met het bevestigen van uw email.";
             return Page();
         }
     }

@@ -58,8 +58,8 @@ namespace Project_Ceustermans_Robin.Areas.Identity.Pages.Account
 
                 await _emailSender.SendEmailAsync(
                     Input.Email,
-                    "Reset Password",
-                    $"Please reset your password by <a href='{HtmlEncoder.Default.Encode(callbackUrl)}'>clicking here</a>.");
+                    "Reset wachtwoord",
+                    $"Verander uw wacht door  <a href='{HtmlEncoder.Default.Encode(callbackUrl)}'>hier te klikken</a>.");
 
                 return RedirectToPage("./ForgotPasswordConfirmation");
             }
