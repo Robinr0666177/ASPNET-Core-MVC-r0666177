@@ -34,12 +34,6 @@ namespace Project_Ceustermans_Robin.Controllers
         {
             CreateMerkViewModel viewModel = new CreateMerkViewModel();
             await LandenOpvullenAsync(viewModel);
-            //viewModel.Landen = new List<SelectListItem>();
-            //var landen = await _context.Landen.ToListAsync();
-            //foreach (var item in landen)
-            //{
-            //    viewModel.Landen.Add(new SelectListItem() { Text = item.Beschrijving, Value = item.LandID.ToString() });
-            //}
             return View(viewModel);
         }
 
@@ -74,7 +68,6 @@ namespace Project_Ceustermans_Robin.Controllers
                 Beschrijving = merk.Beschrijving
             };
             await LandenOpvullenAsync(viewModel);
-            //CreateMerkAsync()
             return View(viewModel);
         }
 
