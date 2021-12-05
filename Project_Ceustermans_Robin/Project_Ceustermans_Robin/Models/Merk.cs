@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Microsoft.AspNetCore.Mvc.Rendering;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.Linq;
@@ -8,6 +9,8 @@ namespace Project_Ceustermans_Robin.Models
 {
     public class Merk
     {
+       
+
         [Key]
         public int MerkID { get; set; }
 

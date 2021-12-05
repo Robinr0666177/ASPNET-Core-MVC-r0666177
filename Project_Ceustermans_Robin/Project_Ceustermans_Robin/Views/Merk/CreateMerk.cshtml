@@ -1,25 +1,28 @@
-﻿
+﻿@model Project_Ceustermans_Robin.ViewModels.CreateMerkViewModel
+
+
 <h1 class="text-center">Nieuw Merk aanmaken</h1>
 
 
 <div>
     <div class="col-md-6 " >
-        <form>
-            
+        <form asp-action="Create"> 
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
             <div class="form-group">
-                <label class="control-label">Naam</label>
-                <input class="form-control" />
-                <span  class="text-danger"></span>
+                <label asp-for="Naam" class="control-label">Naam</label>
+                <input asp-for="Naam" class="form-control" />
+                <span asp-validation-for="Naam" class="text-danger"></span>
             </div>
             <div class="form-group">
-                <label  class="control-label">Beschrijving</label>
-                <input  class="form-control" />
-                <span  class="text-danger"></span>
+                <label asp-for="Beschrijving" class="control-label">Beschrijving</label>
+                <input asp-for="Beschrijving" class="form-control" />
+                <span asp-validation-for="Beschrijving" class="text-danger"></span>
             </div>
             <div class="form-group">
                 <label  class="control-label">Land</label>
-                <input  class="form-control" />
-                <span  class="text-danger"></span>
+               <select asp-items="Model.Landen"asp-for="LandID">
+                   <option>Selecteer een Land</option>
+               </select>
             </div>
             <div class="form-group">
                 <input  value="Create" class="btn btn-primary" />

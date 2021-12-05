@@ -21,7 +21,7 @@ namespace Project_Ceustermans_Robin.Areas.Identity.Pages.Account.Manage
             _userManager = userManager;
             _signInManager = signInManager;
         }
-
+        [Display(Name = "Gebruikersnaam")]
         public string Username { get; set; }
 
         [TempData]

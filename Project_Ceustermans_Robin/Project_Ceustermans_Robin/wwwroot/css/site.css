@@ -22,23 +22,20 @@ a {
      text-decoration: none;
 }
 
+
+
 /*navigatie accountsettings*/
 
-.accountsettingsNavItem:active {
-    color: none;
-    text-decoration: none;
+
+.profile {
+    color: #014F88;
 }
 
-#profile {
-    color: #014F88;
-    text-decoration: none;
-    background-color:none;
-}
-
-#profile:active {
-    color: #014F88;
-    text-decoration: none;
-    background-color:none;
+.profile:active
+.profile:focus:active {
+     color: none!important;
+     text-decoration: none!important;
+     background-color: none!important;
 }
 
 

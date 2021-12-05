@@ -2,15 +2,19 @@
     ViewData["Title"] = "Merken";
 }
 
-<div class="row row-merken">
-    <div class="col-sm-3">
+@if (User.IsInRole("admin"))
+{
+    <div class="row row-merken">
+        <div class="col-sm-3">
+        </div>
+        <div class="col-sm-6 text-center">
+            <a class="btn testbtn " asp-action="CreateMerk" role="button">Merk toevoegen</a>
+        </div>
+        <div class="col-sm-3">
+        </div>
     </div>
-    <div class="col-sm-6 text-center">
-        <a class="btn testbtn " asp-action="CreateMerk" role="button">Merk toevoegen</a>
-    </div>
-    <div class="col-sm-3">
-    </div>
-</div>
+}
+
 
 <table class="table row-merken ">
     <thead>

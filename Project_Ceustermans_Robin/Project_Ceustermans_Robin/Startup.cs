@@ -29,7 +29,7 @@ namespace Project_Ceustermans_Robin
         {
             services.AddControllersWithViews();
             services.AddDbContext<ApplicationDbContext>(options =>
-                  options.UseSqlServer(Configuration.GetConnectionString("LocalDBConnection")));
+                  options.UseSqlServer(Configuration.GetConnectionString("projectConnection")));
             services.AddDefaultIdentity<IdentityUser>(options => options.SignIn.RequireConfirmedAccount = true)
                 .AddRoles<IdentityRole>()
                 .AddEntityFrameworkStores<ApplicationDbContext>();         
@@ -66,7 +66,7 @@ namespace Project_Ceustermans_Robin
                 endpoints.MapRazorPages();
             });
 
-           // CreateRoles(serviceProvider).Wait();
+           CreateRoles(serviceProvider).Wait();
         }
 
 
