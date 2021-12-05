@@ -23,18 +23,18 @@
                     <partial name="_LoginPartial" />
                     <ul class="navbar-nav flex-grow-1">
                         <li class="nav-item">
-                            <a class="nav-link" asp-area="" asp-controller="Items" asp-action="Items">Overzicht items</a>
+                            <a class="nav-link" asp-area="" asp-controller="Items" asp-action="ItemOverzicht">Overzicht items</a>
                         </li>
                         <li class="nav-item">
                             <a class="nav-link" asp-area="" asp-controller="Info" asp-action="Info">Info</a>
                         </li>
-                        @if (this.User.Identity.IsAuthenticated)
+                        @if (User.IsInRole("admin"))
                         {
                             <li class="nav-item">
-                                <a class="nav-link" asp-area="" asp-controller="MedeEigenaar" asp-action="MedeEigenaar">Mede Eigenaren</a>
+                                <a class="nav-link" asp-area="" asp-controller="MedeEigenaar" asp-action="MedeEigenaarOverzicht">Mede Eigenaren</a>
                             </li>
                             <li class="nav-item">
-                                <a class="nav-link" asp-area="" asp-controller="Merk" asp-action="Merk">Merken</a>
+                                <a class="nav-link" asp-area="" asp-controller="Merk" asp-action="MerkOverzicht">Merken</a>
                             </li>
                         }
 

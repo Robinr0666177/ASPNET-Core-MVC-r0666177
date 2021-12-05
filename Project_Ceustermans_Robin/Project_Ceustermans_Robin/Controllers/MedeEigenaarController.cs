@@ -8,7 +8,7 @@ namespace Project_Ceustermans_Robin.Controllers
 {
     public class MedeEigenaarController : Controller
     {
-        public IActionResult MedeEigenaar()
+        public IActionResult MedeEigenaarOverzicht()
         {
             return View();
         }

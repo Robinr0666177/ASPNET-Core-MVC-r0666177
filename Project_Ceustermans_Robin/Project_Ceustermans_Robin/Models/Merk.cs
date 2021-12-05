@@ -9,8 +9,8 @@ namespace Project_Ceustermans_Robin.Models
 {
     public class Merk
     {
-       
-
+      
+        //properties
         [Key]
         public int MerkID { get; set; }
 

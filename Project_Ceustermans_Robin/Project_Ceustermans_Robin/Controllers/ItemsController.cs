@@ -8,7 +8,7 @@ namespace Project_Ceustermans_Robin.Controllers
 {
     public class ItemsController : Controller
     {
-        public IActionResult Items()
+        public IActionResult ItemOverzicht()
         {
             return View();
         }
