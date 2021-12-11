@@ -42,9 +42,14 @@
                         @Html.DisplayFor(x => item.Land.Beschrijving)
                     </td>
                     <td>
-                        <a class="a2" href="">Edit</a>
-                        <a class="a2" href="">Details</a>
-                        <a class="a2" href="">Delete</a>
+                        <a class="a2" asp-action="DetailMerk" asp-route-id="@item.MerkID" >Details</a>
+                        @if (User.IsInRole("admin"))
+                        {
+                            <a class="a2" asp-action="EditMerk" asp-route-id="@item.MerkID" >Bewerk</a>
+                            <a class="a2" asp-action="DeleteMerk" asp-route-id="@item.MerkID" 
+                               onclick="return confirm('Weet je zeker dat je het merk @item.Naam wilt verwijderen' )">
+                        Verwijder</a>
+                        }
                     </td>
                 </tr>
             }

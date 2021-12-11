@@ -1,0 +1,26 @@
+﻿@model Project_Ceustermans_Robin.ViewModels.MerkDetailsViewModel
+@{ 
+    ViewData["Title"] = "Details";
+}
+
+
+    <div class="card row-merken">
+        <div class="card-header kleurBlauw" asp-for="Naam">
+            @Model.Naam
+        </div>
+        <div class="card-body">
+            <h5 class="card-title" >Land</h5>
+            <p class="card-text" asp-for="Land" >
+                @Model.Land
+            </p>
+            <h5 class="card-title">Beschrijving</h5>
+            <p class="card-text" asp-for="Beschrijving" >
+                @Model.Beschrijving
+            </p>
+            <a asp-action="MerkOverzicht" class="btn btn-primary">
+                Ga terug naar het overzicht
+            </a>
+        </div>
+    </div>
+
+

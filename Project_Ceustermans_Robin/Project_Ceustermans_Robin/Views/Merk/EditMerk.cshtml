@@ -1,5 +1,35 @@
-﻿@*
-    For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
-*@
-@{
-}
+﻿@model Project_Ceustermans_Robin.ViewModels.EditMerkViewModel
+
+<h1 class="text-center">Merk bewerken</h1>
+
+
+<div>
+    <div class="col-md-6 ">
+        <form asp-action="EditMerk">
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            <div class="form-group">
+                <label asp-for="Naam" class="control-label">Naam</label>
+                <input asp-for="Naam" class="form-control" />
+                <span asp-validation-for="Naam" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Beschrijving" class="control-label">Beschrijving</label>
+                <input asp-for="Beschrijving" class="form-control" />
+                <span asp-validation-for="Beschrijving" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label class="control-label">Land</label>
+                <select asp-items="Model.Landen" asp-for="LandID">
+                    <option>Selecteer een Land</option>
+                </select>
+                <br />
+                <span asp-validation-for="LandID" class="text-danger"></span>
+            </div>
+            <div class="form-group" id="">
+                <input type="submit" value="EditMerk" class="btn btn-primary" />
+            </div>
+        </form>
+
+    </div>
+
+</div>
