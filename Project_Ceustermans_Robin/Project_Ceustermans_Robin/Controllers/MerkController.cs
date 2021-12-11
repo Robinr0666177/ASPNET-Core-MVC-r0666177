@@ -1,5 +1,4 @@
-﻿
-using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 using Project_Ceustermans_Robin.Data;
@@ -23,7 +22,7 @@ namespace Project_Ceustermans_Robin.Controllers
 
         public async Task<IActionResult> MerkOverzicht()
         {
-            List<Merk> merken = new List<Merk>();
+            //List<Merk> merken = new List<Merk>();
             MerkOverzichtViewModel vm = new MerkOverzichtViewModel();
             vm.Merken = await _context.Merken.Include(x => x.Land).ToListAsync();
             return View(vm);

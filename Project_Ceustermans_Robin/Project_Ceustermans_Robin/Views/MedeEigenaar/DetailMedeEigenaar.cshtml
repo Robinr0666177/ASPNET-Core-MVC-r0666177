@@ -1,0 +1,24 @@
+﻿@model Project_Ceustermans_Robin.ViewModels.MedeEigenaarDetailsViewModel
+@{
+    ViewData["Title"] = "Details mede-eigenaar";
+}
+
+
+<div class="card row-marge">
+    <div class="card-header kleurBlauw">
+        Gegevens mede-eigenaar
+    </div>
+    <div class="card-body">
+        <h5 class="card-title">Voornaam</h5>
+        <p class="card-text" asp-for="Voornaam">
+            @Model.Voornaam
+        </p>
+        <h5 class="card-title">Familie</h5>
+        <p class="card-text" asp-for="Familie">
+            @Model.Familienaam
+        </p>
+        <a asp-action="MedeEigenaarOverzicht" class="btn btn-primary">
+            Ga terug naar het overzicht
+        </a>
+    </div>
+</div>

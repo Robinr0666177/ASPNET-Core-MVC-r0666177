@@ -11,10 +11,10 @@ namespace Project_Ceustermans_Robin.Models
         [Key]
         public int MedeEigenaarID { get; set; }
 
-        [Required]
+        [Required(ErrorMessage ="De voornaam is verplicht!")]
         public string Voornaam { get; set; }
         
-        [Required]
+        [Required(ErrorMessage = "De familienaam is verplicht!")]
         public string Familienaam { get; set; }
 
         //navigateproperties

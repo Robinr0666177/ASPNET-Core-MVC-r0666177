@@ -5,7 +5,7 @@
 
 @if (User.IsInRole("admin"))
 {
-    <div class="row row-merken">
+    <div class="row row-marge">
         <div class="col-sm-3">
         </div>
         <div class="col-sm-6 text-center">
@@ -18,7 +18,7 @@
 
 @if (Model.Merken.Count() > 0)
 {
-    <table class="table row-merken ">
+    <table class="table row-marge">
         <thead>
             <tr>
                 <th>
@@ -60,7 +60,7 @@
 }
 else
 {
-    <h4>
+    <h4 class="row-marge ">
         Er zijn geen merken aanwezig
     </h4>
 }

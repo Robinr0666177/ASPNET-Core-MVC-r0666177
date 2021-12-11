@@ -1,42 +1,67 @@
-﻿@{
+﻿@model Project_Ceustermans_Robin.ViewModels.MedeEigenaarOverzichtViewModel
+@{
     ViewData["Title"] = "Mede Eigenaren";
 }
 
-<div class="row row-merken">
-    <div class="col-sm-3">
+@if (User.IsInRole("admin"))
+{
+    <div class="row row-marge">
+        <div class="col-sm-3">
+        </div>
+        <div class="col-sm-6 text-center">
+            <a class="btn testbtn" asp-action="CreateMedeEigenaar" role="button">Mede Eigenaar toevoegen</a>
+        </div>
+        <div class="col-sm-3">
+        </div>
     </div>
-    <div class="col-sm-6 text-center">
-        <a class="btn testbtn " blur href="" role="button">Mede Eigenaar toevoegen</a>
-    </div>
-    <div class="col-sm-3">
-    </div>
-</div>
+}
 
-<table class="table row-merken ">
-    <thead>
-        <tr>
-            <th>
-                Naam
-            </th>
-            <th>
-                Land
-            </th>
-        </tr>
-    </thead>
-    <tbody>
-        <tr>
-            <td>
-            </td>
-            <td>
-            </td>
-            <td>
-                <a class="a2" href="">Edit</a>
-                <a class="a2" href="">Details</a>
-                <a class="a2" href="">Delete</a>
-            </td>
-        </tr>
+@if (Model.MedeEigenaren.Count() > 0)
+{
+    <table class="table row-marge">
+        <thead>
+            <tr>
+                <th>
+                    Voornaam
+                </th>
+                <th>
+                    Familienaam
+                </th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var item in Model.MedeEigenaren)
+            {
+            <tr>
+                <td>
+                    @Html.DisplayFor(x => item.Voornaam)
+                </td>
+                <td>
+                    @Html.DisplayFor(x => item.Familienaam)
+                </td>
+                <td>
+                    <a class="a2" asp-action="DetailMedeEigenaar" asp-route-id="@item.MedeEigenaarID">Details</a>
+                    @if (User.IsInRole("admin"))
+                    {
+                        <a class="a2" asp-action="EditMedeEigenaar" asp-route-id="@item.MedeEigenaarID">Bewerk</a>
+                        <a class="a2" asp-action="DeleteMedeEigenaar" asp-route-id="@item.MedeEigenaarID"
+                           onclick="return confirm('Weet je zeker dat je mede-eigenaar @item.Voornaam @item.Familienaam wilt verwijderen')">
+                            Verwijder
+                        </a>
+                    }
+                </td>
+            </tr>
+            }
+        </tbody>
+    </table>
+}
+else
+{
+    <h4 class="row-marge">
+        Er zijn geen mede-eigenaren
+    </h4>
+}
 
-    </tbody>
-</table>
+
 
 @*<a class="a2" asp-action="Edit" asp-route-id="">Edit</a>*@
