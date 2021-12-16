@@ -1,0 +1,94 @@
+﻿@model Project_Ceustermans_Robin.ViewModels.CreateVerzamelObjectViewModel
+
+<h1 class="text-center">Nieuw verzamelobject aanmaken</h1>
+
+<form asp-action="CreateVerzamelObject">
+    <div class="form-row justify-content-center">
+        <div class="form-group col-md-8 text-center">
+            <label class="control-label"></label>
+            <div class="custom-file">
+                <input class="custom-file-input " id="customFile">
+                <label class="custom-file-label " for="customFile">Kies een bestand</label>
+            </div>
+            <span class="text-danger"></span>
+        </div>
+    </div>
+
+
+    <div class="form-row">
+        <div class="form-group col-md-6">
+            <label>Naam item</label>
+            <input type="text" class="form-control">
+        </div>
+        <div class="form-group col-md-6">
+            <label>Bouwjaar</label>
+            <input type="text" class="form-control">
+        </div>
+    </div>
+    <div class="form-row">
+        <div class="form-group col-md-6">
+            <label class="control-label">Categorie</label>
+            <select class="form-control" required="required" asp-items="Model.Categorieën" asp-for="CategorieID">
+                <option value="">Selecteer een categorie</option>
+            </select>
+            <br />
+            <span asp-validation-for="CategorieID" class="text-danger"></span>
+        </div>
+
+        <div class="form-group col-md-6">
+            <label class="control-label">Merk</label>
+            <select class="form-control" asp-items="Model.Merken" asp-for="MerkID">
+                <option value="">Selecteer een merk</option>
+            </select>
+            <br />
+            <span asp-validation-for="MerkID" class="text-danger"></span>
+        </div>
+    </div>
+    <div class="form-row">
+        <div class="form-group col-md-6">
+            <label>Merk</label>
+            <select class="form-control" asp-items="Model.MedeEigenaren" asp-for="MedeEigenaarID">
+                <option value="">Selecteer een mede-eigenaar</option>
+            </select>
+        </div>
+    </div>
+
+
+    <div class="form-row">
+        <div class="form-group col-md-6">
+            <label>Aankoopprijs</label>
+            <input type="text" class="form-control">
+        </div>
+        <div class="form-group col-md-6">
+            <label>Actuele waarde</label>
+            <input type="text" class="form-control">
+        </div>
+    </div>
+
+    <div class="form-row">
+        <div class="form-group col-md-4">
+            <label>Breedte</label>
+            <input type="text" class="form-control">
+        </div>
+        <div class="form-group col-md-4">
+            <label>Hoogte</label>
+            <input type="text" class="form-control">
+        </div>
+        <div class="form-group col-md-4">
+            <label>Lengte</label>
+            <input type="text" class="form-control">
+        </div>
+    </div>
+
+    <div class="form-row">
+
+        <div class="form-group col-md-12">
+            <label>Beschrijving</label>
+            <textarea class="form-control" rows="5" placeholder="vul hier bijkomde informatie over het voorwerp, bijvoorbeeld de staat"></textarea>
+        </div>
+    </div>
+    <div class="form-group" id="">
+        <input type="submit" value="Maak verzamelobject aan" class="btn btn-primary" />
+    </div>
+</form>
+

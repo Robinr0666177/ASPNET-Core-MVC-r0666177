@@ -18,7 +18,7 @@ namespace Project_Ceustermans_Robin.Models
         [Required(ErrorMessage = "De naam van het merk moet opgevuld zijn!")]
         public string Naam { get; set; }
 
-        [Required(ErrorMessage = "Er dient een land geselecteerd te zijn!")]
+        
         [RegularExpression("^[0-9]*$", ErrorMessage = "Selecteer een land!")]
         public int LandID { get; set; }
 

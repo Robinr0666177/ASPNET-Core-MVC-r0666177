@@ -5,13 +5,9 @@
 
 @if (User.IsInRole("admin"))
 {
-    <div class="row row-marge">
-        <div class="col-sm-3">
-        </div>
-        <div class="col-sm-6 text-center">
+    <div class="row justify-content-center row-marge">
+        <div class="col-sm-3 text-center ">
             <a class="btn testbtn " asp-action="CreateMerk" role="button">Merk toevoegen</a>
-        </div>
-        <div class="col-sm-3">
         </div>
     </div>
 }

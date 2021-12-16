@@ -1,20 +1,15 @@
 ﻿
 @{
-    ViewData["Title"] = "Items";
+    ViewData["Title"] = "Verzamelobjecten";
 }
-
-
-
-
-
 
 
 <div class="row row-marge">
     <div class="col-sm-3">
         @if (this.User.Identity.IsAuthenticated)
         {
-        <a class="btn testbtn"  href="#" role="button">Item toevoegen</a>
-        }     
+            <a class="btn testbtn" asp-action="CreateVerzamelObject" role="button">Item toevoegen</a>
+        }
     </div>
     <div class="col-sm-6">
         <h1 class="text-center">Mijn verzameling</h1>

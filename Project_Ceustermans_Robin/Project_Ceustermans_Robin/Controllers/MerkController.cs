@@ -19,7 +19,7 @@ namespace Project_Ceustermans_Robin.Controllers
         {
             _context = context;
         }      
-
+        //voor de homepagina
         public async Task<IActionResult> MerkOverzicht()
         {
             //List<Merk> merken = new List<Merk>();

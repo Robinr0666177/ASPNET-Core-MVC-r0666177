@@ -20,5 +20,12 @@ namespace Project_Ceustermans_Robin.Models
         //navigateproperties
         public ICollection<MedeEigenaarObject> medeEigenaarObjecten { get; set; }
 
+        //methodes
+
+        public override string ToString()
+        {
+            return $"{Voornaam} {Familienaam}";
+        }
+
     }
 }
