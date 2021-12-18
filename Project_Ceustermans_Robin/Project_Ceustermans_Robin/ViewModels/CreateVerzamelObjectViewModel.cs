@@ -16,14 +16,15 @@ namespace Project_Ceustermans_Robin.ViewModels
 
         public List<SelectListItem> Merken { get; set; }
         //
+        [Required(ErrorMessage = "Het object dient een naam te hebben!")]
         public string Naam { get; set; }
         public string Beschrijving { get; set; }
         public decimal? AankoopPrijs { get; set; }
         public decimal? Waarde { get; set; }
         public int? CreatieJaar { get; set; }
         public int? MerkID { get; set; }
-        public int ? MedeEigenaarID { get; set; }
-        public int CategorieID { get; set; }
+        [Required(ErrorMessage = "Selecteer een categorie!")]
+        public int? CategorieID { get; set; }
         public int? Breedte_Cm { get; set; }
         public int? Hoogte_Cm { get; set; }
         public int? Lengte_Cm { get; set; }

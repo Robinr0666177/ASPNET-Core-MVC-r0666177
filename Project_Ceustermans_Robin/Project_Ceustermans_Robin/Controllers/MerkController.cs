@@ -22,10 +22,9 @@ namespace Project_Ceustermans_Robin.Controllers
         //voor de homepagina
         public async Task<IActionResult> MerkOverzicht()
         {
-            //List<Merk> merken = new List<Merk>();
-            MerkOverzichtViewModel vm = new MerkOverzichtViewModel();
-            vm.Merken = await _context.Merken.Include(x => x.Land).ToListAsync();
-            return View(vm);
+            MerkOverzichtViewModel viewModel = new MerkOverzichtViewModel();
+            viewModel.Merken = await _context.Merken.Include(x => x.Land).ToListAsync();
+            return View(viewModel);
         }
 
         //combobox opvullen met landen bij het aanmaken/bewerken merken

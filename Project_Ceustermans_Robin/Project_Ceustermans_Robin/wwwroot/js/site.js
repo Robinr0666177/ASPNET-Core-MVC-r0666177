@@ -1,13 +1,6 @@
-﻿////function blurInput() {
-////    document.getElementById('testbtn').blur();
-////}
-
-
-//deze werkt niet
-
-$(".btn").click(function btnclick() {
-    $(".mybtn").attr("button:active", true);
-    $(".mybtn").delay(1000).attr("button:active", false);
+﻿$(".custom-file-input").on("change", function () {
+    var fileName = $(this).val().split("\\").pop();
+    $(this).siblings(".custom-file-label").addClass("selected").html(fileName);
 });
 
 

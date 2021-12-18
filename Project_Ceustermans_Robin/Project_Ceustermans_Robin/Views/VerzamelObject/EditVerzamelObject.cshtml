@@ -1,30 +1,34 @@
 ﻿@model Project_Ceustermans_Robin.ViewModels.EditVerzamelObjectViewModel
 
-<h1 class="text-center">Nieuw verzamelobject aanmaken</h1>
+<h1 class="text-center">Verzamelobject bewerken</h1>
 
-<form asp-action="CreateVerzamelObject">
+
+<form enctype="multipart/form-data">
+    <div asp-validation-summary="ModelOnly" class="text-danger"></div>
     <div class="form-row justify-content-center">
         <div class="form-group col-md-8 text-center">
-            <label class="control-label"></label>
+            <label asp-for="Afbeelding" class="control-label"></label>
             <div class="custom-file">
-                <input class="custom-file-input " id="customFile">
-                <label class="custom-file-label " for="customFile">Kies een bestand</label>
+                <input asp-for="Afbeelding" class="custom-file-input" id="customFile">
+                <label asp-for="Afbeelding" class="custom-file-label" for="customFile">Kies een afbeelding</label>
             </div>
-            <span class="text-danger"></span>
+            <span asp-validation-for="Afbeelding" class="text-danger"></span>
         </div>
     </div>
-
 
     <div class="form-row">
         <div class="form-group col-md-6">
-            <label>Naam item</label>
-            <input type="text" class="form-control">
+            <label asp-for="Naam" class="control-label">Naam item</label>
+            <input asp-for="Naam" type="text" class="form-control">
+            <span asp-validation-for="Naam" class="text-danger"></span>
         </div>
         <div class="form-group col-md-6">
-            <label>Bouwjaar</label>
-            <input type="text" class="form-control">
+            <label asp-for="CreatieJaar">Bouwjaar</label>
+            <input asp-for="CreatieJaar" type="text" class="form-control">
+            <span asp-validation-for="CreatieJaar" class="text-danger"></span>
         </div>
     </div>
+
     <div class="form-row">
         <div class="form-group col-md-6">
             <label class="control-label">Categorie</label>
@@ -45,76 +49,86 @@
         </div>
     </div>
 
-    <div class="row">
+    <div class="form-row">
         <div class="form-group col-md-6">
-            <label>Merk</label>
-            <select class="form-control" asp-items="Model.MedeEigenaren" asp-for="MedeEigenaarID">
-                <option value="">Selecteer een mede-eigenaar</option>
-            </select>
+            <label asp-for="AankoopPrijs">Aankoopprijs</label>
+            <input asp-for="AankoopPrijs" type="text" class="form-control">
+            <span asp-validation-for="AankoopPrijs" class="text-danger"></span>
         </div>
         <div class="form-group col-md-6">
-            <label>Mede-Eigenaren</label>
+            <label asp-for="Waarde">Actuele waarde</label>
+            <input asp-for="Waarde" type="text" class="form-control">
+            <span asp-validation-for="Waarde" class="text-danger"></span>
+        </div>
+    </div>
+
+    <div class="form-row">
+        <div class="form-group col-md-4">
+            <label asp-for="Breedte_Cm">Breedte</label>
+            <input asp-for="Breedte_Cm" type="text" class="form-control">
+            <span asp-validation-for="Breedte_Cm" class="text-danger"></span>
+        </div>
+        <div class="form-group col-md-4">
+            <label asp-for="Hoogte_Cm">Hoogte</label>
+            <input asp-for="Hoogte_Cm" type="text" class="form-control">
+            <span asp-validation-for="Hoogte_Cm" class="text-danger"></span>
+        </div>
+        <div class="form-group col-md-4">
+            <label asp-for="Lengte_Cm">Lengte</label>
+            <input asp-for="Lengte_Cm" type="text" class="form-control">
+            <span asp-validation-for="Lengte_Cm" class="text-danger"></span>
+        </div>
+    </div>
+
+    <div class="row">
+        <div class="col-md-4 text-center">
+            <a class="btn testbtn text-white" role="button">Item toevoegen</a>
+        </div>
+        <div class="col-md-8">
             <table class="table">
                 <thead>
                     <tr>
                         <th>
                             Naam
                         </th>
+
                     </tr>
                 </thead>
-                <tbody>
-                    <tr>
-                        <td>
-                        </td>
-                        <td>
-                            @if (User.IsInRole("admin"))
-                            {
-                                <a class="a2">Verwijder</a>
-                            }
-                        </td>
-                    </tr>
 
+                <tbody>
+                   
+                        <tr>
+                            <td>
+                                Naam Mede-Eigenaar
+                            </td>
+
+                            <td>
+                                @if (User.IsInRole("admin"))
+                                {
+                                    <a class="a2" asp-action="DeleteMerk"
+                                       onclick="return confirm('Weet je zeker dat je het wilt verwijderen' )">
+                                        Verwijder
+                                    </a>
+                                }
+                            </td>
+                        </tr>
                 </tbody>
             </table>
-        </div>
-    </div>
-
-    
-    <div class="form-row">
-        <div class="form-group col-md-6">
-            <label>Aankoopprijs</label>
-            <input type="text" class="form-control">
-        </div>
-        <div class="form-group col-md-6">
-            <label>Actuele waarde</label>
-            <input type="text" class="form-control">
-        </div>
-    </div>
-
-    <div class="form-row">
-        <div class="form-group col-md-4">
-            <label>Breedte</label>
-            <input type="text" class="form-control">
-        </div>
-        <div class="form-group col-md-4">
-            <label>Hoogte</label>
-            <input type="text" class="form-control">
-        </div>
-        <div class="form-group col-md-4">
-            <label>Lengte</label>
-            <input type="text" class="form-control">
         </div>
     </div>
 
     <div class="form-row">
 
         <div class="form-group col-md-12">
-            <label>Beschrijving</label>
-            <textarea class="form-control" rows="5" placeholder="vul hier bijkomde informatie over het voorwerp, bijvoorbeeld de staat"></textarea>
+            <label asp-for="Beschrijving">Beschrijving</label>
+            <textarea asp-for="Beschrijving" class="form-control" rows="5" placeholder="vul hier bijkomde informatie over het voorwerp, bijvoorbeeld de staat"></textarea>
+            <span asp-validation-for="Beschrijving" class="text-danger"></span>
         </div>
     </div>
     <div class="form-group" id="">
-        <input type="submit" value="Maak verzamelobject aan" class="btn btn-primary" />
+        <input type="submit" value="Pas verzamelobject aan" class="btn btn-primary" />
     </div>
 </form>
+
+
 

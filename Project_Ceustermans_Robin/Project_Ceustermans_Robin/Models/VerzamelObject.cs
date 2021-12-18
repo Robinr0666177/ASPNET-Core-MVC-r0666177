@@ -20,8 +20,8 @@ namespace Project_Ceustermans_Robin.Models
         public int? CreatieJaar { get; set; }
         public int? MerkID { get; set; }
 
-        [Required(ErrorMessage = "Het verzamelobject dient een categorie te hebben, als deze geen heeft, selecteer 'overig'")]
-        public int CategorieID { get; set; }
+        [Required(ErrorMessage = "Selecteer een categorie!")]
+        public int? CategorieID { get; set; }
         public int? Breedte_Cm { get; set; }
         public int? Hoogte_Cm { get; set; }
         public int? Lengte_Cm { get; set; }

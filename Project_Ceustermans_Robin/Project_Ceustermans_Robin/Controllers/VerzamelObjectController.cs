@@ -23,10 +23,13 @@ namespace Project_Ceustermans_Robin.Controllers
             _context = context;
             webHostEnvironment = hostEnvironment;
         }
-        public IActionResult VerzamelObjectOverzicht()
+        public async Task<IActionResult> VerzamelObjectOverzicht()
         {
-            //lijst verzamelobjecten
-            return View();
+            VerzamelObjectOverzichtViewModel viewModel = new VerzamelObjectOverzichtViewModel();
+            viewModel.Items = await _context.VerzamelObjecten.Include(x => x.Merk)
+                                                             .Include(x => x.Categorie)
+                                                             .ToListAsync();
+            return View(viewModel);
         }
 
         //voor object aan te maken
@@ -78,11 +81,6 @@ namespace Project_Ceustermans_Robin.Controllers
             return View(viewModel);
         }
 
-        //lijst opvullen van mede-eigenaren die kunnen gekozen worden bij het aanmaken van item
-
-        //lijst opvullen van bestaande mede-eigenaren bij het bewerken van een item
-
-
         ////CRUD
 
         private string UploadedFileNew(CreateVerzamelObjectViewModel ViewModel)
@@ -120,7 +118,7 @@ namespace Project_Ceustermans_Robin.Controllers
                     Waarde = viewModel.Waarde,
                     CreatieJaar = viewModel.CreatieJaar,
                     MerkID = viewModel.MerkID,
-                    CategorieID = viewModel.CategorieID,
+                    CategorieID = 2,
                     Breedte_Cm = viewModel.Breedte_Cm,
                     Hoogte_Cm = viewModel.Hoogte_Cm,
                     Lengte_Cm = viewModel.Lengte_Cm,
@@ -129,10 +127,9 @@ namespace Project_Ceustermans_Robin.Controllers
           
                 _context.Add(verzamelObject);
                 await _context.SaveChangesAsync();
-                //
                 return RedirectToAction(nameof(VerzamelObjectOverzicht));
             }
-            return View();
+            return await CreateVerzamelObjectAsync();
         }
     }
 }
