@@ -27,6 +27,9 @@ namespace Project_Ceustermans_Robin.ViewModels
         public int? Hoogte_Cm { get; set; }
         public int? Lengte_Cm { get; set; }
         [Display(Name = "Afbeelding")]
-        public IFormFile Afbeelding { get; set; }
+        public string Afbeelding { get; set; }
+
+        public IFormFile NieuweAfbeelding { get; set; }
+
     }
 }

@@ -19,6 +19,9 @@ namespace Project_Ceustermans_Robin.ViewModels
         [Required(ErrorMessage = "Het object dient een naam te hebben!")]
         public string Naam { get; set; }
         public string Beschrijving { get; set; }
+
+        [RegularExpression(@"^(((\d{1,3})(,\d{3})*)|(\d+))(.\d+)?$", ErrorMessage = "Error")]
+        [Range(0, Int32.MaxValue)]
         public decimal? AankoopPrijs { get; set; }
         public decimal? Waarde { get; set; }
         public int? CreatieJaar { get; set; }

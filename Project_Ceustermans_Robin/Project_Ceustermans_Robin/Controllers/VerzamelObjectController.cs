@@ -1,4 +1,5 @@
 ﻿using Microsoft.AspNetCore.Hosting;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
@@ -72,16 +73,143 @@ namespace Project_Ceustermans_Robin.Controllers
             }
         }
 
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public async Task<IActionResult> CreateVerzamelObject(CreateVerzamelObjectViewModel viewModel)
+        {
+            if (ModelState.IsValid)
+            {
+                string uniqueFileName = UploadedFileNew(viewModel);
+
+                VerzamelObject verzamelObject = new VerzamelObject()
+                {
+                    Naam = viewModel.Naam,
+                    Beschrijving = viewModel.Beschrijving,
+                    AankoopPrijs = viewModel.AankoopPrijs,
+                    Waarde = viewModel.Waarde,
+                    CreatieJaar = viewModel.CreatieJaar,
+                    MerkID = viewModel.MerkID,
+                    CategorieID = viewModel.CategorieID,
+                    Breedte_Cm = viewModel.Breedte_Cm,
+                    Hoogte_Cm = viewModel.Hoogte_Cm,
+                    Lengte_Cm = viewModel.Lengte_Cm,
+                    Afbeelding = uniqueFileName
+                };
+                _context.Add(verzamelObject);
+                await _context.SaveChangesAsync();
+                return RedirectToAction(nameof(VerzamelObjectOverzicht));
+            }
+            return await CreateVerzamelObjectAsync();
+        }
+
         //voor object te bewerken
 
-        //test
-        public IActionResult EditVerzamelObject()
+        public async Task MerkenOpvullenEditAsync(EditVerzamelObjectViewModel viewModel)
         {
-            EditVerzamelObjectViewModel viewModel = new EditVerzamelObjectViewModel();
+            viewModel.Merken = new List<SelectListItem>();
+            var merken = await _context.Merken.ToListAsync();
+            foreach (var item in merken)
+            {
+                viewModel.Merken.Add(new SelectListItem() { Text = item.Naam, Value = item.MerkID.ToString() });
+            }
+        }
+
+        public async Task CategorieënOpvullenEditAsync(EditVerzamelObjectViewModel viewModel)
+        {
+            viewModel.Categorieën = new List<SelectListItem>();
+            var categorieën = await _context.Categories.ToListAsync();
+            foreach (var item in categorieën)
+            {
+                viewModel.Categorieën.Add(new SelectListItem() { Text = item.Beschrijving, Value = item.CategorieID.ToString() });
+            }
+        }
+
+        public async Task<IActionResult> EditVerzamelObject(int? id)
+        {
+            if (id == null)
+            {
+                return NotFound();
+            }
+
+            VerzamelObject verzamelObject = await _context.VerzamelObjecten.FindAsync(id);
+
+            if (verzamelObject == null)
+            {
+                return NotFound();
+            }
+
+            EditVerzamelObjectViewModel viewModel = new EditVerzamelObjectViewModel()
+            {
+                Naam = verzamelObject.Naam,
+                Beschrijving = verzamelObject.Beschrijving,
+                AankoopPrijs = verzamelObject.AankoopPrijs,
+                Waarde = verzamelObject.Waarde,
+                CreatieJaar = verzamelObject.CreatieJaar,
+                MerkID = verzamelObject.MerkID,
+                CategorieID = (int)verzamelObject.CategorieID,
+                Breedte_Cm = verzamelObject.Breedte_Cm,
+                Hoogte_Cm = verzamelObject.Hoogte_Cm,
+                Lengte_Cm = verzamelObject.Lengte_Cm,
+                Afbeelding = verzamelObject.Afbeelding
+            };
+            await MerkenOpvullenEditAsync(viewModel);
+            await CategorieënOpvullenEditAsync(viewModel);
             return View(viewModel);
         }
 
-        ////CRUD
+        private bool VerzamelObjectExists(int id)
+        {
+            VerzamelObject verzamelObject = _context.VerzamelObjecten.Find(id);
+            return verzamelObject != null ? true : false;
+        }
+
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public async Task<IActionResult> EditVerzamelObject(int id, EditVerzamelObjectViewModel viewModel, VerzamelObject verzamelObject)
+        {
+            verzamelObject.ID = id;
+            if (ModelState.IsValid)
+            {
+                verzamelObject = _context.VerzamelObjecten.Find(id);
+                verzamelObject.Afbeelding = UploadedFileExisting(viewModel, oldImage: verzamelObject.Afbeelding);
+                EditVerzamelObjectViewModel vm = new EditVerzamelObjectViewModel()
+                {
+                    Naam = verzamelObject.Naam,
+                    Beschrijving = verzamelObject.Beschrijving,
+                    AankoopPrijs = verzamelObject.AankoopPrijs,
+                    Waarde = verzamelObject.Waarde,
+                    CreatieJaar = verzamelObject.CreatieJaar,
+                    MerkID = verzamelObject.MerkID,
+                    CategorieID = (int)verzamelObject.CategorieID,
+                    Breedte_Cm = verzamelObject.Breedte_Cm,
+                    Hoogte_Cm = verzamelObject.Hoogte_Cm,
+                    Lengte_Cm = verzamelObject.Lengte_Cm,
+                    Afbeelding = verzamelObject.Afbeelding
+                };
+               
+                try
+                {
+                    _context.Update(verzamelObject);
+                    await _context.SaveChangesAsync();
+                    return RedirectToAction(nameof(VerzamelObjectOverzicht));
+                }
+                catch (DbUpdateConcurrencyException)
+                {
+                    if (VerzamelObjectExists(verzamelObject.ID))
+                    {
+                        return NotFound();
+                    }
+                    else
+                    {
+                        throw;
+                    }
+                }               
+            }
+            await MerkenOpvullenEditAsync(viewModel);
+            await CategorieënOpvullenEditAsync(viewModel);
+            return View(viewModel);
+        }
+        //hulper functies
 
         private string UploadedFileNew(CreateVerzamelObjectViewModel ViewModel)
         {
@@ -100,36 +228,30 @@ namespace Project_Ceustermans_Robin.Controllers
             return uniqueFileName;
         }
 
-
-
-        [HttpPost]
-        [ValidateAntiForgeryToken]
-        public async Task<IActionResult> CreateVerzamelObject(CreateVerzamelObjectViewModel viewModel)
+        private string UploadedFileExisting(EditVerzamelObjectViewModel ViewModel, string oldImage)
         {
-            if (ModelState.IsValid)
+            string uniqueFileName;
+            if (ViewModel.NieuweAfbeelding != null)
             {
-                string uniqueFileName = UploadedFileNew(viewModel);
+                string uploadsFolder = Path.Combine(webHostEnvironment.WebRootPath, "images");
 
-                VerzamelObject verzamelObject = new VerzamelObject()
+                if(oldImage != null)
                 {
-                    Naam = viewModel.Naam,
-                    Beschrijving = viewModel.Beschrijving,
-                    AankoopPrijs = viewModel.AankoopPrijs,
-                    Waarde = viewModel.Waarde,
-                    CreatieJaar = viewModel.CreatieJaar,
-                    MerkID = viewModel.MerkID,
-                    CategorieID = 2,
-                    Breedte_Cm = viewModel.Breedte_Cm,
-                    Hoogte_Cm = viewModel.Hoogte_Cm,
-                    Lengte_Cm = viewModel.Lengte_Cm,
-                    Afbeelding = uniqueFileName
-                };
-          
-                _context.Add(verzamelObject);
-                await _context.SaveChangesAsync();
-                return RedirectToAction(nameof(VerzamelObjectOverzicht));
+                    string oldFilePath = Path.Combine(uploadsFolder, oldImage);
+                    System.IO.File.Delete(oldFilePath);
+                }
+                uniqueFileName = Guid.NewGuid().ToString() + "_" + ViewModel.NieuweAfbeelding.FileName;
+                string filePath = Path.Combine(uploadsFolder, uniqueFileName);
+                using (var fileStream = new FileStream(filePath, FileMode.Create))
+                {
+                    ViewModel.NieuweAfbeelding.CopyTo(fileStream);
+                }
             }
-            return await CreateVerzamelObjectAsync();
+            else
+            {
+                uniqueFileName = oldImage;
+            }
+            return uniqueFileName;
         }
     }
 }
