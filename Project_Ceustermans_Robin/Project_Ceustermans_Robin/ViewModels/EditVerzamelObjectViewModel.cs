@@ -1,5 +1,6 @@
 ﻿using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc.Rendering;
+using Project_Ceustermans_Robin.Models;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
@@ -10,11 +11,12 @@ namespace Project_Ceustermans_Robin.ViewModels
 {
     public class EditVerzamelObjectViewModel
     {
-        public List<SelectListItem> MedeEigenaarObjectnen { get; set; }
-        public List<SelectListItem> MedeEigenaren { get; set; }
+        public List<MedeEigenaarObject> MedeEigenaarObjecten { get; set; }
+        public List<MedeEigenaar> MedeEigenaren { get; set; }
         public List<SelectListItem> Categorieën { get; set; }
         public List<SelectListItem> Merken { get; set; }
         //
+        public int VerzamelObjectID { get; set; }
         public string Naam { get; set; }
         public string Beschrijving { get; set; }
         public decimal? AankoopPrijs { get; set; }

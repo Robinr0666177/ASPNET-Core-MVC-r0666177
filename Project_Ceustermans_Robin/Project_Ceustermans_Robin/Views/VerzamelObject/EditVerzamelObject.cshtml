@@ -2,7 +2,6 @@
 
 <h1 class="text-center">Verzamelobject bewerken</h1>
 
-
 <form enctype="multipart/form-data" class="row-marge" asp-action="EditVerzamelObject">
     <div asp-validation-summary="ModelOnly" class="text-danger"></div>
     <div class="form-row justify-content-center">
@@ -87,37 +86,89 @@
     </div>
 
     <div class="row">
-        <div class="col-md-4 text-center">
-            <a class="btn testbtn text-white" role="button">Mede-Eigenaar toevoegen</a>
-        </div>
-        <div class="col-md-8">
+        <div class="col-md-6" >
             <table class="table">
                 <thead>
                     <tr>
                         <th>
-                            Naam
+                            Vrije Mede-Eigenaren
+                        </th>
+                    </tr>
+                </thead>
+
+                <tbody>
+                    @if (Model.MedeEigenaren.Count() > 0)
+                    {
+                        @foreach (var item in Model.MedeEigenaren)
+                        {
+                            <tr>
+                                <td>
+                                    @Html.DisplayFor(x => item.Voornaam)
+                                </td>
+                                <td>
+                                    @Html.DisplayFor(x => item.Familienaam)
+                                </td>
+                                <td>
+                                    @if (User.IsInRole("admin"))
+                                    {
+                                        <a class="a2 text-success" asp-action="CreateMedeEigenaarObject"  asp-route-id="@item.MedeEigenaarID" asp-route-id2="@Model.VerzamelObjectID" >Voeg Toe</a>
+                                    }
+                                </td>
+                            </tr>
+                        }
+                    }
+                    else
+                    {
+                        <tr class="row-marge">
+                            <td>
+                                Geen Vrije Mede-Eigenaren gevonden
+                            </td>
+                        </tr>
+                    }
+
+                </tbody>
+                </table>
+        </div>
+        <div class="col-md-6">
+            <table class="table">
+                <thead>
+                    <tr>
+                        <th>
+                            Mede-Eigenaren van dit item
                         </th>
 
                     </tr>
                 </thead>
 
                 <tbody>
-                   
-                        <tr>
+                    @if (Model.MedeEigenaarObjecten.Count() > 0)
+                    {
+                        @foreach (var item in Model.MedeEigenaarObjecten)
+                        {
+                            <tr>
+                                <td>
+                                    @Html.DisplayFor(x => item.MedeEigenaar.Voornaam)
+                                </td>
+                                <td>
+                                    @Html.DisplayFor(x => item.MedeEigenaar.Familienaam)
+                                </td>
+                                <td>
+                                    @if (User.IsInRole("admin"))
+                                    {
+                                    <a class="a2 text-success" asp-action="DeleteMedeEigenaarObject" asp-route-id="@item.MedeEigenaarID" asp-route-id2="@Model.VerzamelObjectID">Verwijder</a>
+                                    }
+                                </td>
+                            </tr>
+                        }
+                    }
+                    else
+                    {
+                        <tr class="row-marge">
                             <td>
-                                Naam Mede-Eigenaar
-                            </td>
-
-                            <td>
-                                @if (User.IsInRole("admin"))
-                                {
-                                    <a class="a2" asp-action="DeleteMedeEigenaar"
-                                       onclick="return confirm('Weet je zeker dat je het wilt verwijderen' )">
-                                        Verwijder
-                                    </a>
-                                }
+                                Geen Mede-Eigenaren gevonden bij dit object
                             </td>
                         </tr>
+                    }
                 </tbody>
             </table>
         </div>

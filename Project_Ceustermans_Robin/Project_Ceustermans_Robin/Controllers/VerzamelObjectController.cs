@@ -59,7 +59,7 @@ namespace Project_Ceustermans_Robin.Controllers
             var merken = await _context.Merken.ToListAsync();
             foreach (var item in merken)
             {
-                viewModel.Merken.Add(new SelectListItem() { Text = item.Naam, Value = item.MerkID.ToString() });
+               viewModel.Merken.Add(new SelectListItem() { Text = item.Naam, Value = item.MerkID.ToString() });
             }
         }
 
@@ -124,6 +124,17 @@ namespace Project_Ceustermans_Robin.Controllers
             }
         }
 
+        public async Task VerzamelObjectMedeEigenarenOpvullen(EditVerzamelObjectViewModel viewModel, int? id)
+        {
+            viewModel.MedeEigenaarObjecten = await _context.MedeEigenaarObjecten.Include(x => x.MedeEigenaar).Where(y => y.ObjectID == id).ToListAsync();
+        }
+
+        public async Task VrijeMedeEigenarenOpvullen(EditVerzamelObjectViewModel viewModel, int? id)
+        {
+            var medeEigenarenObjectIDs = await _context.MedeEigenaarObjecten.Include(x => x.MedeEigenaar).Where(y => y.ObjectID == id).Select(z => z.MedeEigenaarID).ToListAsync();
+            viewModel.MedeEigenaren = await _context.MedeEigenaaren.Where(x => !medeEigenarenObjectIDs.Contains(x.MedeEigenaarID)).ToListAsync();         
+        }
+
         public async Task<IActionResult> EditVerzamelObject(int? id)
         {
             if (id == null)
@@ -137,9 +148,9 @@ namespace Project_Ceustermans_Robin.Controllers
             {
                 return NotFound();
             }
-
             EditVerzamelObjectViewModel viewModel = new EditVerzamelObjectViewModel()
             {
+                VerzamelObjectID = verzamelObject.ID,
                 Naam = verzamelObject.Naam,
                 Beschrijving = verzamelObject.Beschrijving,
                 AankoopPrijs = verzamelObject.AankoopPrijs,
@@ -154,6 +165,8 @@ namespace Project_Ceustermans_Robin.Controllers
             };
             await MerkenOpvullenEditAsync(viewModel);
             await CategorieënOpvullenEditAsync(viewModel);
+            await VerzamelObjectMedeEigenarenOpvullen(viewModel, id);
+            await VrijeMedeEigenarenOpvullen(viewModel, id);
             return View(viewModel);
         }
 
@@ -173,7 +186,7 @@ namespace Project_Ceustermans_Robin.Controllers
                 verzamelObject = _context.VerzamelObjecten.Find(id);
                 verzamelObject.Afbeelding = UploadedFileExisting(viewModel, oldImage: verzamelObject.Afbeelding);
                 EditVerzamelObjectViewModel vm = new EditVerzamelObjectViewModel()
-                {
+                {                 
                     Naam = verzamelObject.Naam,
                     Beschrijving = verzamelObject.Beschrijving,
                     AankoopPrijs = verzamelObject.AankoopPrijs,
@@ -207,8 +220,62 @@ namespace Project_Ceustermans_Robin.Controllers
             }
             await MerkenOpvullenEditAsync(viewModel);
             await CategorieënOpvullenEditAsync(viewModel);
+            await VerzamelObjectMedeEigenarenOpvullen(viewModel, id);
+            await VrijeMedeEigenarenOpvullen(viewModel, id);
             return View(viewModel);
         }
+
+        //CRUD Mede-Eigenaren
+
+        public async Task<IActionResult> CreateMedeEigenaarObject(int? id, int? id2)
+        {
+            if (id == null)
+            {
+                return NotFound();
+            }
+            MedeEigenaar medeEigenaar = await _context.MedeEigenaaren.FirstOrDefaultAsync(x => x.MedeEigenaarID == id);
+            if (medeEigenaar == null)
+            {
+                return NotFound();
+            }
+            else
+            {
+                MedeEigenaarObject medeEigenaarObject = new MedeEigenaarObject()
+                {
+                    MedeEigenaarID = medeEigenaar.MedeEigenaarID,
+                    ObjectID = (int)id2
+                };
+                //in dit geval geen crash als er snel wordt geklikt op hetzelfde medeEigenaarObject
+                MedeEigenaarObject testMedeEigenaarObject = await _context.MedeEigenaarObjecten.FirstOrDefaultAsync(x => x == medeEigenaarObject);
+                if (testMedeEigenaarObject == null)
+                {
+                    _context.MedeEigenaarObjecten.Add(medeEigenaarObject);
+                    await _context.SaveChangesAsync();
+                    return RedirectToAction("EditVerzamelObject", new { id = id2 });
+                }              
+            }
+            return RedirectToAction("EditVerzamelObject", new { id = id2});
+        }
+
+      
+        public async Task<IActionResult> DeleteMedeEigenaarObject(int? id, int? id2)
+        {
+            if (id == null)
+            {
+                return NotFound();
+            }
+            MedeEigenaarObject medeEigenaarObject = await _context.MedeEigenaarObjecten.FirstOrDefaultAsync(x => x.MedeEigenaarID == id);
+            //in dit geval geen crash als er snel wordt geklikt op hetzelfde medeEigenaarObject
+            if (medeEigenaarObject != null)
+            {
+                _context.MedeEigenaarObjecten.Remove(medeEigenaarObject);
+                await _context.SaveChangesAsync();
+                return RedirectToAction("EditVerzamelObject", new { id = id2 });
+            }
+            
+            return RedirectToAction("EditVerzamelObject", new { id = id2 });
+        }
+
         //hulper functies
 
         private string UploadedFileNew(CreateVerzamelObjectViewModel ViewModel)
