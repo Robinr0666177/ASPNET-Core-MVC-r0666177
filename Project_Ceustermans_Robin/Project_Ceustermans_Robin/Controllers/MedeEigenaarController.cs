@@ -80,14 +80,12 @@ namespace Project_Ceustermans_Robin.Controllers
                 return NotFound();
             }
             MedeEigenaar medeEigenaar = await _context.MedeEigenaaren.FirstOrDefaultAsync(y => y.MedeEigenaarID == id);
-            if (medeEigenaar == null)
-            {
-                return NotFound();
-            }
-            else
+            //in dit geval geen crash als er snel wordt geklikt op hetzelfde medeEigenaar als de onclick zou verwijderd worden
+            if (medeEigenaar != null)
             {
                 _context.MedeEigenaaren.Remove(medeEigenaar);
                 await _context.SaveChangesAsync();
+                return RedirectToAction(nameof(MedeEigenaarOverzicht));
             }
             return RedirectToAction(nameof(MedeEigenaarOverzicht));
         }

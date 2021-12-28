@@ -4,26 +4,15 @@
 }
 
 
-<div class="row row-marge">
-    <div class="col-sm-3">
+<div class="row row-marge align-content-center">
+    <div class="col-sm-4">
         @if (this.User.Identity.IsAuthenticated)
         {
             <a class="btn testbtn" asp-action="CreateVerzamelObject" role="button">Item toevoegen</a>
         }
     </div>
-    <div class="col-sm-6">
-        <h1 class="text-center">Mijn verzameling</h1>
-    </div>
-    <div class="col-sm-3">
-
-        @if (this.User.Identity.IsAuthenticated)
-        {
-            <div class="input-group rounded">
-                <input type="search" class="form-control rounded" placeholder="Search" aria-label="Search"
-                       aria-describedby="search-addon" />
-                <i class="fas fa-search btn btn-danger "></i>
-            </div>
-        }
+    <div class="col-sm-8">
+        <h1>Mijn verzameling</h1>
     </div>
 </div>
 

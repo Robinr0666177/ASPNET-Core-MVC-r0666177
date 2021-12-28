@@ -14,45 +14,46 @@
 
 @if (Model.Merken.Count() > 0)
 {
-    <table class="table row-marge">
-        <thead>
-            <tr>
-                <th>
-                    Naam
-                </th>
-                <th>
-                    Land
-                </th>
-
-            </tr>
-        </thead>
-
-        <tbody>
-            @foreach (var item in Model.Merken)
-            {
+    <div class="row-marge" style="height:400px;overflow:auto;">
+        <table class="table">
+            <thead>
                 <tr>
-                    <td>
-                        @Html.DisplayFor(x => item.Naam)
-                    </td>
-                    <td>
-                        @Html.DisplayFor(x => item.Land.Beschrijving)
-                    </td>
-                    <td>
-                        <a class="a2" asp-action="DetailMerk" asp-route-id="@item.MerkID" >Details</a>
-                        @if (User.IsInRole("admin"))
-                        {
-                            <a class="a2" asp-action="EditMerk" asp-route-id="@item.MerkID" >Bewerk</a>
-                            <a class="a2" asp-action="DeleteMerk" asp-route-id="@item.MerkID" 
-                               onclick="return confirm('Weet je zeker dat je het merk @item.Naam wilt verwijderen?' )">
-                        Verwijder</a>
-                        }
-                    </td>
+                    <th>
+                        Naam
+                    </th>
+                    <th>
+                        Land
+                    </th>
+
                 </tr>
-            }
+            </thead>
 
-
-        </tbody>
-    </table>
+            <tbody>
+                @foreach (var item in Model.Merken)
+                {
+                    <tr>
+                        <td>
+                            @Html.DisplayFor(x => item.Naam)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(x => item.Land.Beschrijving)
+                        </td>
+                        <td>
+                            <a class="a2 text-dark" asp-action="DetailMerk" asp-route-id="@item.MerkID">Details</a>
+                            @if (User.IsInRole("admin"))
+                            {
+                                <a class="a2 text-dark" asp-action="EditMerk" asp-route-id="@item.MerkID">Bewerk</a>
+                                <a class="a2 text-danger" asp-action="DeleteMerk" asp-route-id="@item.MerkID"
+                                   onclick="return confirm('Weet je zeker dat je het merk @item.Naam wilt verwijderen?' )">
+                                    Verwijder
+                                </a>
+                            }
+                        </td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+    </div>
 }
 else
 {
@@ -60,7 +61,3 @@ else
         Er zijn geen merken aanwezig
     </h4>
 }
-
-
-
-@*<a class="a2" asp-action="Edit" asp-route-id="">Edit</a>*@

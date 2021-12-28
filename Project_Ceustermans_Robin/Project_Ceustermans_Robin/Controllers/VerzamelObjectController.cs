@@ -335,14 +335,13 @@ namespace Project_Ceustermans_Robin.Controllers
                 return NotFound();
             }
             MedeEigenaarObject medeEigenaarObject = await _context.MedeEigenaarObjecten.FirstOrDefaultAsync(x => x.MedeEigenaarID == id);
-            //in dit geval geen crash als er snel wordt geklikt op hetzelfde medeEigenaarObject
+            //in dit geval geen crash als er snel wordt geklikt op hetzelfde verzamelobject als de onclick zou verwijderd worden
             if (medeEigenaarObject != null)
             {
                 _context.MedeEigenaarObjecten.Remove(medeEigenaarObject);
                 await _context.SaveChangesAsync();
                 return RedirectToAction("EditVerzamelObject", new { id = id2 });
-            }
-            
+            }          
             return RedirectToAction("EditVerzamelObject", new { id = id2 });
         }
 

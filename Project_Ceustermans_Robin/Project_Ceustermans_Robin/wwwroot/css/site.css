@@ -27,16 +27,18 @@ a {
 /*navigatie accountsettings*/
 
 
-.profile {
+.profile,.prfile1, .profile2, .profile3, .profile4, .profile5, .profile6 {
     color: #014F88;
 }
 
-.profile:active
-.profile:focus:active {
-     color: none!important;
-     text-decoration: none!important;
-     background-color: none!important;
-}
+    .profile:active
+    .profile:focus:active
+    .profile1:active
+    .profile1:focus:active {
+        color: none !important;
+        text-decoration: none !important;
+        background-color: none !important;
+    }
 
 
 a:hover {

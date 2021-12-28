@@ -107,14 +107,12 @@ namespace Project_Ceustermans_Robin.Controllers
                 return NotFound();
             }
             Merk merk = await _context.Merken.Include(x => x.Land).FirstOrDefaultAsync(y => y.MerkID == id);
-            if (merk == null)
-            {
-                return NotFound();
-            }
-            else
+            //in dit geval geen crash als er snel wordt geklikt op hetzelfde merk als de onclick zou verwijderd worden
+            if (merk != null)
             {
                 _context.Merken.Remove(merk);
                 await _context.SaveChangesAsync();
+                return RedirectToAction(nameof(MerkOverzicht));
             }
             return RedirectToAction(nameof(MerkOverzicht));
         }

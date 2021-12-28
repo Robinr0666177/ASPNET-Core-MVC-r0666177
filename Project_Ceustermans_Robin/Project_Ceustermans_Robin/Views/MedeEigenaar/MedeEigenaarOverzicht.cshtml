@@ -14,42 +14,44 @@
 
 @if (Model.MedeEigenaren.Count() > 0)
 {
-    <table class="table row-marge">
-        <thead>
-            <tr>
-                <th>
-                    Voornaam
-                </th>
-                <th>
-                    Familienaam
-                </th>
-            </tr>
-        </thead>
-        <tbody>
-            @foreach (var item in Model.MedeEigenaren)
-            {
-            <tr>
-                <td>
-                    @Html.DisplayFor(x => item.Voornaam)
-                </td>
-                <td>
-                    @Html.DisplayFor(x => item.Familienaam)
-                </td>
-                <td>
-                    <a class="a2" asp-action="DetailMedeEigenaar" asp-route-id="@item.MedeEigenaarID">Details</a>
-                    @if (User.IsInRole("admin"))
-                    {
-                        <a class="a2" asp-action="EditMedeEigenaar" asp-route-id="@item.MedeEigenaarID">Bewerk</a>
-                        <a class="a2" asp-action="DeleteMedeEigenaar" asp-route-id="@item.MedeEigenaarID"
-                           onclick="return confirm('Weet je zeker dat je mede-eigenaar @item.Voornaam @item.Familienaam wilt verwijderen')">
-                            Verwijder
-                        </a>
-                    }
-                </td>
-            </tr>
-            }
-        </tbody>
-    </table>
+    <div class="row-marge" style="height:400px;overflow:auto;">
+        <table class="table">
+            <thead>
+                <tr>
+                    <th>
+                        Voornaam
+                    </th>
+                    <th>
+                        Familienaam
+                    </th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (var item in Model.MedeEigenaren)
+                {
+                    <tr>
+                        <td>
+                            @Html.DisplayFor(x => item.Voornaam)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(x => item.Familienaam)
+                        </td>
+                        <td>
+                            <a class="a2 text-dark" asp-action="DetailMedeEigenaar" asp-route-id="@item.MedeEigenaarID">Details</a>
+                            @if (User.IsInRole("admin"))
+                            {
+                                <a class="a2 text-dark" asp-action="EditMedeEigenaar" asp-route-id="@item.MedeEigenaarID">Bewerk</a>
+                                <a class="a2 text-danger" asp-action="DeleteMedeEigenaar" asp-route-id="@item.MedeEigenaarID"
+                                   onclick="return confirm('Weet je zeker dat je mede-eigenaar @item.Voornaam @item.Familienaam wilt verwijderen')">
+                                    Verwijder
+                                </a>
+                            }
+                        </td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+    </div>
 }
 else
 {
