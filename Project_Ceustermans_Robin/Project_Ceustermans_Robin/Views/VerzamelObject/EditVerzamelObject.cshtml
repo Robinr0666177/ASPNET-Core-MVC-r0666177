@@ -3,7 +3,7 @@
 <h1 class="text-center">Verzamelobject bewerken</h1>
 
 <form enctype="multipart/form-data" class="row-marge" asp-action="EditVerzamelObject">
-    <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+    <div  class="text-danger"></div>
     <div class="form-row justify-content-center">
 
         <div class="form-group col-md-8 text-center">
@@ -15,9 +15,8 @@
             </span>       
             <div class="custom-file row-marge">
                 <input asp-for="NieuweAfbeelding" class="custom-file-input" id="customFile">
-                <label asp-for="NieuweAfbeelding" class="custom-file-label" for="customFile">Kies een afbeelding</label>
+                <label asp-for="NieuweAfbeelding" class="custom-file-label" for="customFile">Kies andere een afbeelding</label>
             </div>
-            <span asp-validation-for="NieuweAfbeelding" class="text-danger"></span>
         </div>
     </div>
 

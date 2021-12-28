@@ -1,5 +1,117 @@
-﻿@*
-    For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
-*@
+﻿@model Project_Ceustermans_Robin.ViewModels.VerzamelObjectDetailsViewModel
 @{
+    ViewData["Title"] = $"Details {Model.Naam} ";
 }
+
+<div class="card row-marge">
+    <div class="card-header kleurBlauw" asp-for="Naam">
+        @Model.Naam
+    </div>
+    <div class="card-body align-content-center">
+        <div class="row text-center">
+            <div class="col-md-12">
+                @if (Model.Afbeelding != null)
+                {
+                    <img src="~/images/@Model.Afbeelding" class="card-img-top text-center" style="width: 35%" alt="afbeelding object">
+                }
+            </div>
+        </div>
+
+        <div class="row row-marge">
+            <div class="col-md-4">
+                <h5 class="card-title">Jaar Creatie</h5>
+                <p class="card-text" asp-for="CreatieJaar">
+                    @Model.CreatieJaar
+                </p>
+            </div>
+            <div class="col-md-4">
+                <h5 class="card-title">Merk</h5>
+                <p class="card-text" asp-for="Merk">
+                    @Model.Merk
+                </p>
+            </div>
+            <div class="col-md-4">
+                <h5 class="card-title">Categorie</h5>
+                <p class="card-text" asp-for="Categorie">
+                    @Model.Categorie
+                </p>
+            </div>
+        </div>
+
+        <div class="row row-marge">
+            <div class="col-md-4">
+                <h5 class="card-title">(Geschatte) waarde</h5>
+                <p class="card-text" asp-for="Waarde">
+                    @Model.Waarde
+                </p>
+            </div>
+            <div class="col-md-8 text-center">
+                <h5 class="card-title">Beschrijving</h5>
+                <p class="card-text" asp-for="Beschrijving">
+                    @Model.Beschrijving
+                </p>
+            </div>
+        </div>
+
+        <div class="row row-marge align-content-center">
+            <div class="col-md-12 text-center">
+                <ul class="list-group">
+                    <li class="list-group-item"><h4>Afmetingen</h4></li>
+                    <li class="list-group-item">
+                        <div class="row">
+                            <div class="col-md-4">
+                                <p>Hoogte: @Model.Hoogte_Cm cm</p>
+                            </div>
+                            <div class="col-md-4">
+                                <p>Lengte: @Model.Lengte_Cm cm</p>
+                            </div>
+                            <div class="col-md-4">
+                                <p>Breedte: @Model.Breedte_Cm cm</p>
+                            </div>
+                        </div>
+                    </li>
+                </ul>
+            </div>
+        </div>
+
+        <div class="row row-marge">
+            <div class="col-md-12">
+                <table class="table">
+                    <thead>
+                        <tr>
+                            <th class="kleurBlauw text-light">
+                                Mede-Eigenaren van dit item
+                            </th>
+
+                        </tr>
+                    </thead>
+
+                    <tbody>
+                        @if (Model.MedeEigenarenObject.Count() > 0)
+                        {
+                            @foreach (var item in Model.MedeEigenarenObject)
+                            {
+                                <tr>
+                                    <td>
+                                        @Html.DisplayFor(x => item.MedeEigenaar.Voornaam)
+                                        @Html.DisplayFor(x => item.MedeEigenaar.Familienaam)
+                                    </td>
+                                </tr>
+                            }
+                        }
+                        else
+                        {
+                            <tr class="row-marge">
+                                <td>
+                                    Geen Mede-Eigenaren gevonden bij dit object
+                                </td>
+                            </tr>
+                        }
+                    </tbody>
+                </table>
+            </div>
+        </div>
+
+
+    </div>
+</div>

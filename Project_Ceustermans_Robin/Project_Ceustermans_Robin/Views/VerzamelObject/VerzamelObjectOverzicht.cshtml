@@ -71,11 +71,12 @@
                         </li>
                     </ul>
                     <div class="card-body text-center">
-                        <a href="#" class="card-link text-dark">Details</a>
+                        <a class="card-link text-dark" asp-action="DetailVerzamelObject" asp-route-id="@item.ID">Details</a>
                         @if (User.IsInRole("admin"))
                         {
                             <a class="card-link text-dark" asp-action="EditVerzamelObject" asp-route-id="@item.ID">Bewerk</a>
-                            <a href="#" class="card-link text-danger">Verwijder</a>
+                            <a class="card-link text-danger" asp-action="DeleteVerzamelObject" asp-route-id="@item.ID" 
+                               onclick="return confirm('Weet je zeker dat je het verzamelobject @item.Naam wilt verwijderen?' )">Verwijder</a>
                         }
                     </div>
                 </div>

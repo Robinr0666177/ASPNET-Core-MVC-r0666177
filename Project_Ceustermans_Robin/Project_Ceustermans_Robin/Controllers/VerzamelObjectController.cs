@@ -33,7 +33,58 @@ namespace Project_Ceustermans_Robin.Controllers
             return View(viewModel);
         }
 
+
+
+        //Details object
+
+
+        
+        public async Task<IActionResult> DetailVerzamelObject(int? id)
+        {
+            if (id == null)
+            {
+                return NotFound();
+            }
+            VerzamelObject verzamelObject = await _context.VerzamelObjecten.Include(x => x.Merk).Include(x => x.Categorie)
+                                                                           .Include(x => x.medeEigenaarObjecten).ThenInclude(y => y.MedeEigenaar)
+                                                                           .FirstOrDefaultAsync(x => x.ID == id);
+            if (verzamelObject != null)
+            {
+                string merk = "";
+                if (verzamelObject.Merk != null)
+                {
+                    merk = verzamelObject.Merk.Naam;
+                }
+                else
+                {
+                    merk = "";
+                }
+                VerzamelObjectDetailsViewModel viewModel = new VerzamelObjectDetailsViewModel()
+                {
+                    Afbeelding = verzamelObject.Afbeelding,
+                    Naam = verzamelObject.Naam,
+                    Beschrijving = verzamelObject.Beschrijving,
+                    AankoopPrijs = verzamelObject.AankoopPrijs,
+                    Waarde = verzamelObject.Waarde,
+                    CreatieJaar = verzamelObject.CreatieJaar,
+                    Merk = merk,
+                    Categorie = verzamelObject.Categorie.Beschrijving,
+                    Breedte_Cm = verzamelObject.Breedte_Cm,
+                    Hoogte_Cm = verzamelObject.Hoogte_Cm,
+                    Lengte_Cm = verzamelObject.Lengte_Cm,
+                    MedeEigenarenObject = verzamelObject.medeEigenaarObjecten
+                };
+                return View(viewModel);
+            }
+            return RedirectToAction(nameof(VerzamelObjectOverzicht));
+        }
+
+
+
         //voor object aan te maken
+
+
+
         public async Task<IActionResult> CreateVerzamelObjectAsync()
         {
             CreateVerzamelObjectViewModel viewModel = new CreateVerzamelObjectViewModel();
@@ -102,7 +153,11 @@ namespace Project_Ceustermans_Robin.Controllers
             return await CreateVerzamelObjectAsync();
         }
 
+
+
         //voor object te bewerken
+
+
 
         public async Task MerkenOpvullenEditAsync(EditVerzamelObjectViewModel viewModel)
         {
@@ -144,30 +199,32 @@ namespace Project_Ceustermans_Robin.Controllers
 
             VerzamelObject verzamelObject = await _context.VerzamelObjecten.FindAsync(id);
 
-            if (verzamelObject == null)
+            if (verzamelObject != null)
             {
-                return NotFound();
+                EditVerzamelObjectViewModel viewModel = new EditVerzamelObjectViewModel()
+                {
+                    VerzamelObjectID = verzamelObject.ID,
+                    Afbeelding = verzamelObject.Afbeelding,
+                    Naam = verzamelObject.Naam,
+                    Beschrijving = verzamelObject.Beschrijving,
+                    AankoopPrijs = verzamelObject.AankoopPrijs,
+                    Waarde = verzamelObject.Waarde,
+                    CreatieJaar = verzamelObject.CreatieJaar,
+                    MerkID = verzamelObject.MerkID,
+                    CategorieID = (int)verzamelObject.CategorieID,
+                    Breedte_Cm = verzamelObject.Breedte_Cm,
+                    Hoogte_Cm = verzamelObject.Hoogte_Cm,
+                    Lengte_Cm = verzamelObject.Lengte_Cm
+
+                };
+                await MerkenOpvullenEditAsync(viewModel);
+                await CategorieënOpvullenEditAsync(viewModel);
+                await VerzamelObjectMedeEigenarenOpvullen(viewModel, id);
+                await VrijeMedeEigenarenOpvullen(viewModel, id);
+                return View(viewModel);
             }
-            EditVerzamelObjectViewModel viewModel = new EditVerzamelObjectViewModel()
-            {
-                VerzamelObjectID = verzamelObject.ID,
-                Naam = verzamelObject.Naam,
-                Beschrijving = verzamelObject.Beschrijving,
-                AankoopPrijs = verzamelObject.AankoopPrijs,
-                Waarde = verzamelObject.Waarde,
-                CreatieJaar = verzamelObject.CreatieJaar,
-                MerkID = verzamelObject.MerkID,
-                CategorieID = (int)verzamelObject.CategorieID,
-                Breedte_Cm = verzamelObject.Breedte_Cm,
-                Hoogte_Cm = verzamelObject.Hoogte_Cm,
-                Lengte_Cm = verzamelObject.Lengte_Cm,
-                Afbeelding = verzamelObject.Afbeelding
-            };
-            await MerkenOpvullenEditAsync(viewModel);
-            await CategorieënOpvullenEditAsync(viewModel);
-            await VerzamelObjectMedeEigenarenOpvullen(viewModel, id);
-            await VrijeMedeEigenarenOpvullen(viewModel, id);
-            return View(viewModel);
+            return RedirectToAction(nameof(VerzamelObjectOverzicht));
+
         }
 
         private bool VerzamelObjectExists(int id)
@@ -183,32 +240,26 @@ namespace Project_Ceustermans_Robin.Controllers
             verzamelObject.ID = id;
             if (ModelState.IsValid)
             {
-                verzamelObject = _context.VerzamelObjecten.Find(id);
-                verzamelObject.Afbeelding = UploadedFileExisting(viewModel, oldImage: verzamelObject.Afbeelding);
-                EditVerzamelObjectViewModel vm = new EditVerzamelObjectViewModel()
-                {                 
-                    Naam = verzamelObject.Naam,
-                    Beschrijving = verzamelObject.Beschrijving,
-                    AankoopPrijs = verzamelObject.AankoopPrijs,
-                    Waarde = verzamelObject.Waarde,
-                    CreatieJaar = verzamelObject.CreatieJaar,
-                    MerkID = verzamelObject.MerkID,
-                    CategorieID = (int)verzamelObject.CategorieID,
-                    Breedte_Cm = verzamelObject.Breedte_Cm,
-                    Hoogte_Cm = verzamelObject.Hoogte_Cm,
-                    Lengte_Cm = verzamelObject.Lengte_Cm,
-                    Afbeelding = verzamelObject.Afbeelding
-                };
-               
                 try
                 {
+                    verzamelObject = _context.VerzamelObjecten.Find(id);
+                    verzamelObject.Afbeelding = UploadedFileExisting(viewModel, oldImage: verzamelObject.Afbeelding);
+                    verzamelObject.Naam = viewModel.Naam;
+                    verzamelObject.Beschrijving = viewModel.Beschrijving;
+                    verzamelObject.AankoopPrijs = viewModel.AankoopPrijs;
+                    verzamelObject.Waarde = viewModel.Waarde;
+                    verzamelObject.CreatieJaar = viewModel.CreatieJaar;
+                    verzamelObject.MerkID = viewModel.MerkID;
+                    verzamelObject.CategorieID = viewModel.CategorieID;
+                    verzamelObject.Breedte_Cm = viewModel.Breedte_Cm;
+                    verzamelObject.Hoogte_Cm = viewModel.Hoogte_Cm;
+                    verzamelObject.Lengte_Cm = viewModel.Lengte_Cm;                   
                     _context.Update(verzamelObject);
                     await _context.SaveChangesAsync();
-                    return RedirectToAction(nameof(VerzamelObjectOverzicht));
                 }
                 catch (DbUpdateConcurrencyException)
                 {
-                    if (VerzamelObjectExists(verzamelObject.ID))
+                    if (!VerzamelObjectExists(verzamelObject.ID))
                     {
                         return NotFound();
                     }
@@ -216,8 +267,27 @@ namespace Project_Ceustermans_Robin.Controllers
                     {
                         throw;
                     }
-                }               
+                }
+                return RedirectToAction(nameof(VerzamelObjectOverzicht));
             }
+
+            EditVerzamelObjectViewModel vm = new EditVerzamelObjectViewModel()
+            {
+                VerzamelObjectID = verzamelObject.ID,
+                //de afbeelding blijft bestaan maar na een mislukte update zal deze niet weergeven worden, ik weet niet waarom
+                Afbeelding = verzamelObject.Afbeelding,
+                Naam = verzamelObject.Naam,
+                Beschrijving = verzamelObject.Beschrijving,
+                AankoopPrijs = verzamelObject.AankoopPrijs,
+                Waarde = verzamelObject.Waarde,
+                CreatieJaar = verzamelObject.CreatieJaar,
+                MerkID = verzamelObject.MerkID,
+                CategorieID = (int)verzamelObject.CategorieID,
+                Breedte_Cm = verzamelObject.Breedte_Cm,
+                Hoogte_Cm = verzamelObject.Hoogte_Cm,
+                Lengte_Cm = verzamelObject.Lengte_Cm              
+            };
+
             await MerkenOpvullenEditAsync(viewModel);
             await CategorieënOpvullenEditAsync(viewModel);
             await VerzamelObjectMedeEigenarenOpvullen(viewModel, id);
@@ -274,6 +344,32 @@ namespace Project_Ceustermans_Robin.Controllers
             }
             
             return RedirectToAction("EditVerzamelObject", new { id = id2 });
+        }
+
+
+
+
+        //Delete VerzamelObject
+
+
+
+        public async Task<IActionResult> DeleteVerzamelObject(int? id)
+        {
+            if (id != null)
+            {
+                VerzamelObject verzamelObject = await _context.VerzamelObjecten.FirstOrDefaultAsync(x => x.ID == id);
+                if (verzamelObject == null)
+                {
+                    return NotFound();
+                }
+                else
+                {
+                    _context.VerzamelObjecten.Remove(verzamelObject);
+                    await _context.SaveChangesAsync();
+                }               
+            }
+            return RedirectToAction(nameof(VerzamelObjectOverzicht));
+
         }
 
         //hulper functies
